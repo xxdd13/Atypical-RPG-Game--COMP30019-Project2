@@ -112,6 +112,7 @@ namespace Gamekit3D
 
         void LateUpdate()
         {
+            print(currentHitPoints);
             if (schedule != null)
             {
                 schedule();
