@@ -198,26 +198,11 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: <Root Transform>
+    motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: "Avatar Rig Configuration mis-match. Inbetween bone rotation
-      in configuration does not match rotation in animation file:\n\t'Bip01_L_HorseLink'
-      : rotation error = 0.090253 deg\n"
+    rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Default Take' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'Bip01_Pelvis' is inbetween humanoid transforms
-      and has rotation animation that will be discarded.\n\t'Bip01_Spine' is inbetween
-      humanoid transforms and has rotation animation that will be discarded.\n\t'Bip01_Neck'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Bip01_L_Clavicle'
-      has translation animation that will be discarded.\n\t'Bip01_Neck1' is inbetween
-      humanoid transforms and has rotation animation that will be discarded.\n\t'Bip01_Head'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Bip01_R_Clavicle'
-      has translation animation that will be discarded.\n\t'Bip01_R_Thigh' has translation
-      animation that will be discarded.\n\t'Bip01_R_HorseLink' is inbetween humanoid
-      transforms and has rotation animation that will be discarded.\n\t'Bip01_L_Thigh'
-      has translation animation that will be discarded.\n\t'Bip01_L_HorseLink' is
-      inbetween humanoid transforms and has rotation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 1
@@ -241,14 +226,14 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
+      loopTime: 1
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -299,7 +284,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    rootMotionBoneName: Scene_Root
+    rootMotionBoneName: Bip01
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0

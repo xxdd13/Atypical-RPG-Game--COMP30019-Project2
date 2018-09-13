@@ -175,7 +175,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: ice-final-start
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101503626415259570}
@@ -227,7 +227,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: ice-final-end
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101508258744714818}
@@ -372,13 +372,13 @@ AnimatorStateMachine:
     m_Position: {x: 300, y: 24, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102260016000512604}
-    m_Position: {x: 493.96594, y: 222.75453, z: 0}
+    m_Position: {x: 492, y: 228, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102599360257069484}
     m_Position: {x: 574.7924, y: 309.3543, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102553037883129266}
-    m_Position: {x: 495.1206, y: 387.87152, z: 0}
+    m_Position: {x: 492, y: 384, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

@@ -1316,31 +1316,31 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4912296390061396, guid: 18216bb823cf90f469291af83f95f0a5, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.68
+      value: -6.992998
       objectReference: {fileID: 0}
     - target: {fileID: 4912296390061396, guid: 18216bb823cf90f469291af83f95f0a5, type: 2}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.0126674045
       objectReference: {fileID: 0}
     - target: {fileID: 4912296390061396, guid: 18216bb823cf90f469291af83f95f0a5, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.0000003375975
       objectReference: {fileID: 0}
     - target: {fileID: 4912296390061396, guid: 18216bb823cf90f469291af83f95f0a5, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.0000000034880006
       objectReference: {fileID: 0}
     - target: {fileID: 4912296390061396, guid: 18216bb823cf90f469291af83f95f0a5, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.9999198
       objectReference: {fileID: 0}
     - target: {fileID: 4912296390061396, guid: 18216bb823cf90f469291af83f95f0a5, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.8
+      value: 22.840012
       objectReference: {fileID: 0}
     - target: {fileID: 4912296390061396, guid: 18216bb823cf90f469291af83f95f0a5, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 8.93
+      value: 62.059998
       objectReference: {fileID: 0}
     - target: {fileID: 114695471129079442, guid: 18216bb823cf90f469291af83f95f0a5,
         type: 2}
@@ -1370,7 +1370,7 @@ Prefab:
     - target: {fileID: 20105507677810426, guid: 18216bb823cf90f469291af83f95f0a5,
         type: 2}
       propertyPath: field of view
-      value: 40
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 20105507677810426, guid: 18216bb823cf90f469291af83f95f0a5,
         type: 2}
@@ -2069,6 +2069,47 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 100092, guid: 364c53f963d7b1e4a83baa168df20310, type: 3}
   m_PrefabInternal: {fileID: 1531900142}
+--- !u!114 &1117006590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1117006589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0149b5ab8f608c943b260125ac76d875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHitPoints: 35
+  invulnerabiltyTime: 0
+  hitAngle: 360
+  hitForwardRotation: 360
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReceiveDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnHitWhileInvulnerable:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnBecomeVulnerable:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnResetDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onDamageMessageReceivers: []
 --- !u!114 &1117006592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3212,7 +3253,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400092, guid: 364c53f963d7b1e4a83baa168df20310, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.081119895
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 400092, guid: 364c53f963d7b1e4a83baa168df20310, type: 3}
       propertyPath: m_LocalPosition.z
