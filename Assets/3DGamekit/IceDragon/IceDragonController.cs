@@ -5,7 +5,7 @@ using UnityEngine;
 public class IceDragonController : MonoBehaviour {
 
     public GameObject player;
-    public GameObject pheonixHead;
+         
 
     readonly int m_Attack13End = Animator.StringToHash("Attack13End");
 
@@ -49,7 +49,8 @@ public class IceDragonController : MonoBehaviour {
         //m_Animator.SetBool(m_turnRight, turnRight);
 
         if (Input.GetKeyDown("x"))
-            transform.position += transform.forward * 1f; 
+            transform.position += transform.forward * 1f;
+
 
     }
 }

@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.Events;
 using Gamekit3D.Message;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
+
 
 namespace Gamekit3D
 {
     public partial class Damageable : MonoBehaviour
     {
+
+        public Slider healthSlider;  
 
         public int maxHitPoints;
         [Tooltip("Time that this gameObject is invulnerable for, after receiving damage.")]
@@ -112,12 +116,16 @@ namespace Gamekit3D
 
         void LateUpdate()
         {
-            print(currentHitPoints);
+            //print(currentHitPoints);
             if (schedule != null)
             {
                 schedule();
                 schedule = null;
             }
+
+            //update enemy health ui slider
+            if (healthSlider != null)
+                healthSlider.value = this.currentHitPoints;
         }
 
 #if UNITY_EDITOR
