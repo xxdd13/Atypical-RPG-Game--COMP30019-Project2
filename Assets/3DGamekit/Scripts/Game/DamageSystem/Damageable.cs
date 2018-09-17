@@ -128,7 +128,7 @@ namespace Gamekit3D
                 healthSlider.value = this.currentHitPoints;
         }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR    
         private void OnDrawGizmosSelected()
         {
             Vector3 forward = transform.forward;

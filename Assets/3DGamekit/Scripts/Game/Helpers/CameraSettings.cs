@@ -24,15 +24,15 @@ namespace Gamekit3D
         public Transform follow;
         public Transform lookAt;
         public CinemachineFreeLook keyboardAndMouseCamera;
-        public CinemachineFreeLook controllerCamera;
+
         public InputChoice inputChoice;
         public InvertSettings keyboardAndMouseInvertSettings;
-        public InvertSettings controllerInvertSettings;
+
         public bool allowRuntimeCameraSettingsChanges;
 
         public CinemachineFreeLook Current
         {
-            get { return inputChoice == InputChoice.KeyboardAndMouse ? keyboardAndMouseCamera : controllerCamera; }
+            get { return keyboardAndMouseCamera; }
         }
 
         void Reset()
@@ -41,9 +41,7 @@ namespace Gamekit3D
             if (keyboardAndMouseCameraTransform != null)
                 keyboardAndMouseCamera = keyboardAndMouseCameraTransform.GetComponent<CinemachineFreeLook>();
 
-            Transform controllerCameraTransform = transform.Find("ControllerFreeLookRig");
-            if (controllerCameraTransform != null)
-                controllerCamera = controllerCameraTransform.GetComponent<CinemachineFreeLook>();
+
 
             PlayerController playerController = FindObjectOfType<PlayerController>();
             if (playerController != null && playerController.name == "Ellen")
@@ -77,13 +75,9 @@ namespace Gamekit3D
             keyboardAndMouseCamera.m_XAxis.m_InvertInput = keyboardAndMouseInvertSettings.invertX;
             keyboardAndMouseCamera.m_YAxis.m_InvertInput = keyboardAndMouseInvertSettings.invertY;
 
-            controllerCamera.m_XAxis.m_InvertInput = controllerInvertSettings.invertX;
-            controllerCamera.m_YAxis.m_InvertInput = controllerInvertSettings.invertY;
-            controllerCamera.Follow = follow;
-            controllerCamera.LookAt = lookAt;
 
             keyboardAndMouseCamera.Priority = inputChoice == InputChoice.KeyboardAndMouse ? 1 : 0;
-            controllerCamera.Priority = inputChoice == InputChoice.Controller ? 1 : 0;
+
         }
     } 
 }

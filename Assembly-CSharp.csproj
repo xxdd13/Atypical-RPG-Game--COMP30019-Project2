@@ -208,6 +208,8 @@
     <Compile Include="Assets\3DGamekit\Scripts\Scripts\SoundTrack.cs" />
     <Compile Include="Assets\3DGamekit\Scripts\Scripts\SoundTrackVolume.cs" />
     <Compile Include="Assets\Scripts\Billboard.cs" />
+    <Compile Include="Assets\Scripts\BossHealthDisplay.cs" />
+    <Compile Include="Assets\Scripts\BossHealUiSync.cs" />
     <None Include="Assets\3DGamekit\Art\Shaders\Rock.shader" />
     <None Include="Assets\3DGamekit\Art\Shaders\SculptedHair.shader" />
     <None Include="Assets\3DGamekit\Art\Shaders\Swish.shader" />

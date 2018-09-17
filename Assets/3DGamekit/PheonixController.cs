@@ -68,7 +68,7 @@ public class PheonixController : MonoBehaviour {
 
                 }
                 
-                print("Pheonix turning Left");
+                //print("Pheonix turning Left");
             }
             else
             {
@@ -95,7 +95,7 @@ public class PheonixController : MonoBehaviour {
                 }
                     
 
-                print("Pheonix turning Right");
+                //print("Pheonix turning Right");
 
 
             }
