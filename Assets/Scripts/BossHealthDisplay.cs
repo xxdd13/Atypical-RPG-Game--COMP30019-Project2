@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class BossHealthDisplay : MonoBehaviour
 {
     public GameObject player;
-    public bool active = true;
+    public bool active = false;
     public Gamekit3D.Damageable damageable;
     public Slider healthSlider;
-    public GameObject healthSliderObject;
+    public GameObject bossUI;
+    public Text canvasBossText;
+    public string bossName;
 
     // Use this for initialization
     void Start()
@@ -23,38 +25,33 @@ public class BossHealthDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (active && damageable != null)
+        if (damageable != null)
         {
             //player is close to this boss
-            if (Vector3.Distance(player.transform.position, this.transform.position) < 5f)
+            if (Vector3.Distance(player.transform.position, this.transform.position) < 15f)
             {
-                this.healthSliderObject.SetActive(true);
+                this.bossUI.SetActive(true);
                 damageable.healthSlider = this.healthSlider;
-                damageable.healthSlider.enabled = true; 
+                damageable.healthSlider.enabled = true;
+                canvasBossText.text = this.bossName;
             }
             else
             {
                 //hide healbar
                 if(damageable.healthSlider!=null&&damageable.healthSlider.enabled==true){
-                    this.healthSliderObject.SetActive(false);
-                   
+                    this.bossUI.SetActive(false);
+                    canvasBossText.text = " ";
+                    damageable.healthSlider = null;
+
                 }
-                    
-                damageable.healthSlider = null;
-                print("hide health bar");
+                
+                
+                
 
 
             }
         }
 
     }
-    void OnTriggerEnter(Collider other)
-    {
-        // If the entering collider is the iceDragon...
-        this.active = true;
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        this.active = true;
-    }
+    
 }
