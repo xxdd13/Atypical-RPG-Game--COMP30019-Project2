@@ -5,7 +5,10 @@ using UnityEngine;
 public class IceDragonController : MonoBehaviour {
 
     public GameObject player;
-         
+
+    public GameObject iceFlame;
+    private bool flameDone = false;
+
 
     readonly int m_Attack13End = Animator.StringToHash("Attack13End");
 
@@ -20,12 +23,16 @@ public class IceDragonController : MonoBehaviour {
     protected bool turnLeft = false;
     protected bool turnRight = false;
 
+
     // Use this for initialization
     void Start()
     {
         m_Animator = GetComponent<Animator>();
 
     }
+
+    
+
 
     // Update is called once per frame
     void Update()
@@ -44,12 +51,45 @@ public class IceDragonController : MonoBehaviour {
             print("ice final key was pressed");
         }
 
-        //m_Animator.SetBool(m_turning, turning);
-        //m_Animator.SetBool(m_turnLeft, turnLeft);
-        //m_Animator.SetBool(m_turnRight, turnRight);
+        if (!flameDone && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("ice-final-end"))
+        {
+            print("final cast");
+            iceFlame.SetActive(true);
+            iceFlame.GetComponent<FlameHidden>().startFlame();
+            flameDone = true;
 
-        if (Input.GetKeyDown("x"))
-            transform.position += transform.forward * 1f;
+        }
+
+        if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("icedragon-final-end2"))
+        {
+            //iceFlame.SetActive(false);
+            FlameHidden fh = iceFlame.GetComponent<FlameHidden>();
+            fh.stopFlame();
+            flameDone = false;
+            
+        }
+        if (!flameDone && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("iceage-loop-end"))
+        {
+            print("iceage cast");
+            iceFlame.SetActive(true);
+            iceFlame.GetComponent<FlameHidden>().startFlame();
+            flameDone = true;
+
+        }
+
+        if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Stand"))
+        {
+            FlameHidden fh = iceFlame.GetComponent<FlameHidden>();
+            fh.stopFlame();
+            flameDone = false;
+
+        }
+
+        if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("iceage-start"))
+        {
+            this.transform.position = new Vector3(this.transform.position.x,this.transform.position.y + Time.deltaTime * 2.0f, this.transform.position.z);
+
+        }
 
 
     }

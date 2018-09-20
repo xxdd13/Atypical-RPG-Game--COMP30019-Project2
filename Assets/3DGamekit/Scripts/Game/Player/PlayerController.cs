@@ -8,6 +8,9 @@ namespace Gamekit3D
     [RequireComponent(typeof(Animator))]
     public class PlayerController : MonoBehaviour, IMessageReceiver
     {
+        /// xxxxxxxxxxxxxxx
+        public PlayerSkill m_skill;
+        /// xxxxxxxxxxxxxx
         protected static PlayerController s_Instance;
         public static PlayerController instance { get { return s_Instance; } }
 
@@ -78,6 +81,7 @@ namespace Gamekit3D
         readonly int m_HashGrounded = Animator.StringToHash("Grounded");
         readonly int m_HashInputDetected = Animator.StringToHash("InputDetected");
         readonly int m_HashMeleeAttack = Animator.StringToHash("MeleeAttack");
+        readonly int m_HashRButtonAttack = Animator.StringToHash("RButtonAttack");
         readonly int m_HashHurt = Animator.StringToHash("Hurt");
         readonly int m_HashDeath = Animator.StringToHash("Death");
         readonly int m_HashRespawn = Animator.StringToHash("Respawn");
@@ -145,6 +149,9 @@ namespace Gamekit3D
             m_Animator = GetComponent<Animator>();
             m_CharCtrl = GetComponent<CharacterController>();
 
+            /////xxxxxxxxxxxxxxxxx
+            m_skill = GetComponent<PlayerSkill>();
+
             meleeWeapon.SetOwner(gameObject);
 
             s_Instance = this;
@@ -188,8 +195,15 @@ namespace Gamekit3D
             m_Animator.SetFloat(m_HashStateTime, Mathf.Repeat(m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
             m_Animator.ResetTrigger(m_HashMeleeAttack);
 
+            m_Animator.ResetTrigger(m_HashRButtonAttack);
+
             if (m_Input.Attack && canAttack)
                 m_Animator.SetTrigger(m_HashMeleeAttack);
+            if (m_Input.RButton && canAttack) {
+                m_Animator.SetTrigger(m_HashRButtonAttack);
+                m_skill.rb();
+            }
+                
 
             CalculateForwardMovement();
             CalculateVerticalMovement();
@@ -468,7 +482,7 @@ namespace Gamekit3D
         // Called each physics step to count up to the point where Ellen considers a random idle.
         void TimeoutToIdle()
         {
-            bool inputDetected = IsMoveInput || m_Input.Attack || m_Input.JumpInput;
+            bool inputDetected = IsMoveInput || m_Input.Attack || m_Input.JumpInput || m_Input.RButton;
             if (m_IsGrounded && !inputDetected)
             {
                 m_IdleTimer += Time.deltaTime;

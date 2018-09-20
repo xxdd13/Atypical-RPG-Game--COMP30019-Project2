@@ -22,6 +22,7 @@ public class PlayerInput : MonoBehaviour
     protected bool m_Attack;
     protected bool m_Pause;
     protected bool m_ExternalInputBlocked;
+    public bool RButton;
 
     public Vector2 MoveInput
     {
@@ -59,13 +60,17 @@ public class PlayerInput : MonoBehaviour
     }
 
     WaitForSeconds m_AttackInputWait;
+    WaitForSeconds m_RBInputWait;
     Coroutine m_AttackWaitCoroutine;
+    Coroutine m_RBWaitCoroutine;
 
     const float k_AttackInputDuration = 0.03f;
+    const float k_RBInputDuration = 0.03f;
 
     void Awake()
     {
         m_AttackInputWait = new WaitForSeconds(k_AttackInputDuration);
+        m_RBInputWait = new WaitForSeconds(k_RBInputDuration);
 
         if (s_Instance == null)
             s_Instance = this;
@@ -88,7 +93,14 @@ public class PlayerInput : MonoBehaviour
             m_AttackWaitCoroutine = StartCoroutine(AttackWait());
         }
 
-        //m_Pause = Input.GetButtonDown ("Pause");
+        if (Input.GetMouseButtonDown(1)) {
+            if (m_RBWaitCoroutine != null)
+                StopCoroutine(m_RBWaitCoroutine);
+
+            m_RBWaitCoroutine = StartCoroutine(RBWait());
+            Debug.Log("Pressed secondary button.");
+        }
+            
     }
 
     IEnumerator AttackWait()
@@ -98,6 +110,14 @@ public class PlayerInput : MonoBehaviour
         yield return m_AttackInputWait;
 
         m_Attack = false;
+    }
+    IEnumerator RBWait()
+    {
+        RButton = true;
+
+        yield return m_RBInputWait;
+
+        RButton = false;
     }
 
     public bool HaveControl()
