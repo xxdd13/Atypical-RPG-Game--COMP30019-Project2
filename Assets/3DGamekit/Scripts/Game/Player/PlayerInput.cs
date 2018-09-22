@@ -23,6 +23,7 @@ public class PlayerInput : MonoBehaviour
     protected bool m_Pause;
     protected bool m_ExternalInputBlocked;
     public bool RButton;
+    public bool NukeButton;
 
     public Vector2 MoveInput
     {
@@ -61,16 +62,21 @@ public class PlayerInput : MonoBehaviour
 
     WaitForSeconds m_AttackInputWait;
     WaitForSeconds m_RBInputWait;
+    WaitForSeconds m_NukeInputWait;
+
     Coroutine m_AttackWaitCoroutine;
     Coroutine m_RBWaitCoroutine;
+    Coroutine m_NukeWaitCoroutine;
 
     const float k_AttackInputDuration = 0.03f;
     const float k_RBInputDuration = 0.03f;
+    const float k_NukeInputDuration = 0.01f;
 
     void Awake()
     {
         m_AttackInputWait = new WaitForSeconds(k_AttackInputDuration);
         m_RBInputWait = new WaitForSeconds(k_RBInputDuration);
+        m_NukeInputWait = new WaitForSeconds(k_NukeInputDuration);
 
         if (s_Instance == null)
             s_Instance = this;
@@ -100,7 +106,15 @@ public class PlayerInput : MonoBehaviour
             m_RBWaitCoroutine = StartCoroutine(RBWait());
             Debug.Log("Pressed secondary button.");
         }
-            
+        if (Input.GetMouseButtonDown(2))
+        {
+            if (m_NukeWaitCoroutine != null)
+                StopCoroutine(m_NukeWaitCoroutine);
+
+            m_NukeWaitCoroutine = StartCoroutine(NukeWait());
+            Debug.Log("Pressed middle button.");
+        }
+
     }
 
     IEnumerator AttackWait()
@@ -119,7 +133,14 @@ public class PlayerInput : MonoBehaviour
 
         RButton = false;
     }
+    IEnumerator NukeWait()
+    {
+        NukeButton = true;
 
+        yield return m_NukeInputWait;
+
+        NukeButton = false;
+    }
     public bool HaveControl()
     {
         return !m_ExternalInputBlocked;

@@ -15,6 +15,6 @@ public class ColName : MonoBehaviour {
 	}
     void OnCollisionEnter(Collision hit)
     {
-        Debug.Log("Collider: " + hit.contacts[0].thisCollider.name);
+        Debug.Log("Collider11111: " + hit.contacts[0].thisCollider.name);
     }
 }

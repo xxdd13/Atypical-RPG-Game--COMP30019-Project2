@@ -10,7 +10,7 @@ GameObject:
   - component: {fileID: 401032}
   - component: {fileID: 19825614}
   - component: {fileID: 19994730}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: MuzzleFireballBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 400466}
   - component: {fileID: 19882486}
   - component: {fileID: 19966808}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 491964}
   - component: {fileID: 19820456}
   - component: {fileID: 19941338}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

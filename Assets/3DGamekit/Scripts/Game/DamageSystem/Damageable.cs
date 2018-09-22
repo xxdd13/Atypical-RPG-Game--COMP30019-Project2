@@ -94,8 +94,8 @@ namespace Gamekit3D
             Vector3 positionToDamager = data.damageSource - transform.position;
             positionToDamager -= transform.up * Vector3.Dot(transform.up, positionToDamager);
 
-            if (Vector3.Angle(forward, positionToDamager) > hitAngle * 0.5f)
-                return;
+            //if (Vector3.Angle(forward, positionToDamager) > hitAngle * 0.5f)
+            //return;
 
             isInvulnerable = true;
             currentHitPoints -= data.amount;

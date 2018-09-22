@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 11464288}
   - component: {fileID: 135712887723315682}
   - component: {fileID: 114065521771573358}
-  - component: {fileID: 114528264262142934}
   m_Layer: 11
   m_Name: FireBallBlueOBJ
   m_TagString: Untagged
@@ -107,17 +106,6 @@ MonoBehaviour:
   damagedLayers:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114528264262142934
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 128572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b60ced284bd9c9439f5e71c4e67d52b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &135712887723315682
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -10,6 +10,9 @@ namespace Gamekit3D
     {
         /// xxxxxxxxxxxxxxx
         public PlayerSkill m_skill;
+
+        
+
         /// xxxxxxxxxxxxxx
         protected static PlayerController s_Instance;
         public static PlayerController instance { get { return s_Instance; } }
@@ -82,6 +85,9 @@ namespace Gamekit3D
         readonly int m_HashInputDetected = Animator.StringToHash("InputDetected");
         readonly int m_HashMeleeAttack = Animator.StringToHash("MeleeAttack");
         readonly int m_HashRButtonAttack = Animator.StringToHash("RButtonAttack");
+        readonly int m_HashNuke = Animator.StringToHash("Nuke");
+
+
         readonly int m_HashHurt = Animator.StringToHash("Hurt");
         readonly int m_HashDeath = Animator.StringToHash("Death");
         readonly int m_HashRespawn = Animator.StringToHash("Respawn");
@@ -102,6 +108,9 @@ namespace Gamekit3D
 
         // Tags
         readonly int m_HashBlockInput = Animator.StringToHash("BlockInput");
+
+
+        private PlayerCoolDown cd;
 
         protected bool IsMoveInput
         {
@@ -149,7 +158,9 @@ namespace Gamekit3D
             m_Animator = GetComponent<Animator>();
             m_CharCtrl = GetComponent<CharacterController>();
 
+
             /////xxxxxxxxxxxxxxxxx
+            cd = GetComponent<PlayerCoolDown>();
             m_skill = GetComponent<PlayerSkill>();
 
             meleeWeapon.SetOwner(gameObject);
@@ -206,11 +217,36 @@ namespace Gamekit3D
             if (m_Input.Attack && canAttack)
                 m_Animator.SetTrigger(m_HashMeleeAttack);
             if (m_Input.RButton && canAttack) {
-                UpdateOrientation();
-                m_Animator.SetTrigger(m_HashRButtonAttack);
-                m_skill.rb();
+                if (cd.rb)
+                {
+                    cd.rbCast();
+                    UpdateOrientation();
+                    m_Animator.SetTrigger(m_HashRButtonAttack);
+                    m_skill.rb();
+                }
+                    
             }
+            if (m_Input.NukeButton && canAttack && cd.nuke)
+            {
+                if(!m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Nuke")){
+                    cd.nukeCast();
+                    UpdateOrientation();
+                    m_Animator.SetTrigger(m_HashNuke);
+                    m_skill.nuke();
+                }
                 
+            }
+
+            //temp
+            if (Input.GetKeyDown("b"))
+            {
+                m_skill.guidedTrigger = true;
+
+
+            }
+
+            
+
 
             CalculateForwardMovement();
             CalculateVerticalMovement();
@@ -411,7 +447,7 @@ namespace Gamekit3D
         // Called each physics step to count up to the point where Ellen considers a random idle.
         void TimeoutToIdle()
         {
-            bool inputDetected = IsMoveInput || m_Input.Attack || m_Input.JumpInput || m_Input.RButton;
+            bool inputDetected = IsMoveInput || m_Input.Attack || m_Input.JumpInput || m_Input.RButton || m_Input.NukeButton;
             if (m_IsGrounded && !inputDetected)
             {
                 m_IdleTimer += Time.deltaTime;
