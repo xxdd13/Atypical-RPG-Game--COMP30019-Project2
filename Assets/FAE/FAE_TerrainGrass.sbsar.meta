@@ -1,0 +1,75 @@
+fileFormatVersion: 2
+guid: 7154642c7e2a90e42ac41a57d23f7317
+ScriptedImporter:
+  fileIDToRecycleName:
+    100000: FAE_TerrainGrass/FAE_TerrainGrass
+    400000: FAE_TerrainGrass/FAE_TerrainGrass/Transform
+    2100000: mat.TerrainGrass
+    2300000: FAE_TerrainGrass/FAE_TerrainGrass/MeshRenderer
+    2800000: TerrainGrass_Base Color
+    2800002: TerrainGrass_Normal
+    2800004: TerrainGrass_height
+    3300000: FAE_TerrainGrass/FAE_TerrainGrass/MeshFilter
+    11400000: sbsar
+    11400002: graph0
+    13500000: FAE_TerrainGrass/FAE_TerrainGrass/SphereCollider
+    100100000: FAE_TerrainGrass
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
+  mGraphInstanceData:
+  - graphLabel: TerrainGrass
+    graphDescIndex: 0
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://TerrainGrass\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: Base Color,Normal,height
+    texturePackingList:
+    - outputName: Base Color
+      alphaSource: Base Color
+    - outputName: Normal
+      alphaSource: Normal
+    - outputName: height
+      alphaSource: height
+    - outputName: roughness
+      alphaSource: roughness
+    colorSpaceList:
+    - outputName: Base Color
+      bLinear: 0
+    - outputName: Normal
+      bLinear: 1
+    - outputName: height
+      bLinear: 1
+    - outputName: roughness
+      bLinear: 1
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100000, guid: 7154642c7e2a90e42ac41a57d23f7317, type: 3}

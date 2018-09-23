@@ -1,0 +1,102 @@
+fileFormatVersion: 2
+guid: 1f0183196090ed642b2067893c4a2ade
+ScriptedImporter:
+  fileIDToRecycleName:
+    100000: FAE_Tree/FAE_Tree
+    400000: FAE_Tree/FAE_Tree/Transform
+    2100000: mat.Tree
+    2300000: FAE_Tree/FAE_Tree/MeshRenderer
+    2800000: Tree_bush
+    2800002: Tree_bark_normal
+    2800004: Tree_bark_height
+    2800006: Tree_A_billboard
+    2800008: Tree_B_billboard
+    2800010: Tree_C_billboard
+    3300000: FAE_Tree/FAE_Tree/MeshFilter
+    11400000: sbsar
+    11400002: graph0
+    13500000: FAE_Tree/FAE_Tree/SphereCollider
+    100100000: FAE_Tree
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
+  mGraphInstanceData:
+  - graphLabel: Tree
+    graphDescIndex: 0
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://Tree\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: bush,bark_normal,bark_height,A_billboard,B_billboard,C_billboard
+    texturePackingList:
+    - outputName: bush
+      alphaSource: bush
+    - outputName: bark_diffuse
+      alphaSource: bark_diffuse
+    - outputName: bark_normal
+      alphaSource: bark_normal
+    - outputName: bark_height
+      alphaSource: bark_height
+    - outputName: A_billboard
+      alphaSource: A_billboard
+    - outputName: A_billboard_normal
+      alphaSource: A_billboard_normal
+    - outputName: B_billboard
+      alphaSource: B_billboard
+    - outputName: B_billboard_normal
+      alphaSource: B_billboard_normal
+    - outputName: C_billboard
+      alphaSource: C_billboard
+    - outputName: C_billboard_normal
+      alphaSource: C_billboard_normal
+    colorSpaceList:
+    - outputName: bush
+      bLinear: 0
+    - outputName: bark_diffuse
+      bLinear: 0
+    - outputName: bark_normal
+      bLinear: 1
+    - outputName: bark_height
+      bLinear: 1
+    - outputName: A_billboard
+      bLinear: 0
+    - outputName: A_billboard_normal
+      bLinear: 1
+    - outputName: B_billboard
+      bLinear: 0
+    - outputName: B_billboard_normal
+      bLinear: 1
+    - outputName: C_billboard
+      bLinear: 0
+    - outputName: C_billboard_normal
+      bLinear: 1
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 0
+      textureHeight: 0
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 0
+      textureHeight: 0
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 0
+      textureHeight: 0
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100000, guid: 1f0183196090ed642b2067893c4a2ade, type: 3}

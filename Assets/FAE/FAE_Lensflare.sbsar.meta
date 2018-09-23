@@ -1,0 +1,61 @@
+fileFormatVersion: 2
+guid: 13e33a3e8444faf409dbdba7eeed5bff
+ScriptedImporter:
+  fileIDToRecycleName:
+    100000: FAE_Lensflare/FAE_Lensflare
+    400000: FAE_Lensflare/FAE_Lensflare/Transform
+    2100000: mat.FAE_Lensflare
+    2300000: FAE_Lensflare/FAE_Lensflare/MeshRenderer
+    2800000: FAE_Lensflare_output
+    3300000: FAE_Lensflare/FAE_Lensflare/MeshFilter
+    11400000: sbsar
+    11400002: graph0
+    13500000: FAE_Lensflare/FAE_Lensflare/SphereCollider
+    100100000: FAE_Lensflare
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
+  mGraphInstanceData:
+  - graphLabel: FAE_Lensflare
+    graphDescIndex: 0
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://FAE_Lensflare\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: output
+    texturePackingList:
+    - outputName: output
+      alphaSource: output
+    colorSpaceList:
+    - outputName: output
+      bLinear: 0
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100000, guid: 13e33a3e8444faf409dbdba7eeed5bff, type: 3}

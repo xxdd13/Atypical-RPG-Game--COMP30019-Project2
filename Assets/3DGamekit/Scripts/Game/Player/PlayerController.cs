@@ -216,25 +216,36 @@ namespace Gamekit3D
 
             if (m_Input.Attack && canAttack)
                 m_Animator.SetTrigger(m_HashMeleeAttack);
+
             if (m_Input.RButton && canAttack) {
                 if (cd.rb)
                 {
-                    cd.rbCast();
+                    
                     UpdateOrientation();
                     m_Animator.SetTrigger(m_HashRButtonAttack);
-                    m_skill.rb();
+                    
                 }
                     
             }
+            
+
+            //nukkkkkkkkkkkke
             if (m_Input.NukeButton && canAttack && cd.nuke)
             {
-                if(!m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Nuke")){
-                    cd.nukeCast();
-                    UpdateOrientation();
-                    m_Animator.SetTrigger(m_HashNuke);
-                    m_skill.nuke();
-                }
+                UpdateOrientation();
+                m_Animator.SetTrigger(m_HashNuke);
                 
+                
+            }
+
+            if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("RButtonAttack") && cd.rb)
+            {
+                cd.rbCast();
+                m_skill.rb();
+            }else if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Nuke") && cd.nuke)
+            {
+                cd.nukeCast();
+                m_skill.nuke();
             }
 
             //temp
@@ -244,8 +255,22 @@ namespace Gamekit3D
 
 
             }
+            //teleport to gold dragon
+            if (Input.GetKeyDown("t"))
+            {
+                this.transform.position = new Vector3(-88.27f, 0.5f, 113f);
 
-            
+
+            }
+            //teleport to final boss
+            if (Input.GetKeyDown("f"))
+            {
+                this.transform.position = new Vector3(-71.01f, 116f, -256f);
+
+
+            }
+
+
 
 
             CalculateForwardMovement();

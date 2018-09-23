@@ -1,0 +1,66 @@
+fileFormatVersion: 2
+guid: e65711a37f9dfb04ea27266d05cef87e
+ScriptedImporter:
+  fileIDToRecycleName:
+    100000: FAE_RockDetail/FAE_RockDetail
+    400000: FAE_RockDetail/FAE_RockDetail/Transform
+    2100000: mat.FAE_RockDetail
+    2300000: FAE_RockDetail/FAE_RockDetail/MeshRenderer
+    2800000: FAE_RockDetail_globalcolor
+    2800002: FAE_RockDetail_detail_normal
+    3300000: FAE_RockDetail/FAE_RockDetail/MeshFilter
+    11400000: sbsar
+    11400002: graph0
+    13500000: FAE_RockDetail/FAE_RockDetail/SphereCollider
+    100100000: FAE_RockDetail
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
+  mGraphInstanceData:
+  - graphLabel: FAE_RockDetail
+    graphDescIndex: 0
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://FAE_RockDetail\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: globalcolor,detail_normal
+    texturePackingList:
+    - outputName: globalcolor
+      alphaSource: globalcolor
+    - outputName: detail_normal
+      alphaSource: detail_normal
+    colorSpaceList:
+    - outputName: globalcolor
+      bLinear: 0
+    - outputName: detail_normal
+      bLinear: 1
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100000, guid: e65711a37f9dfb04ea27266d05cef87e, type: 3}

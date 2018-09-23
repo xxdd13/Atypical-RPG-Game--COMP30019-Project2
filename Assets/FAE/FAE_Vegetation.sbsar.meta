@@ -1,0 +1,419 @@
+fileFormatVersion: 2
+guid: f654a384396a5a245a9a41a56b8efbeb
+ScriptedImporter:
+  fileIDToRecycleName:
+    100000: FAE_Vegetation/FAE_Vegetation
+    400000: FAE_Vegetation/FAE_Vegetation/Transform
+    2100000: mat.FAE_TreeBush
+    2100002: mat.FAE_Vegetation_Atlas
+    2100004: mat.FAE_Speedwell
+    2100006: mat.FAE_TallGrass
+    2100008: mat.Leaf
+    2100010: mat.Lillypad
+    2100012: mat.Lotus
+    2100014: mat.ElephantEar
+    2100016: mat.FAE_Bush
+    2300000: FAE_Vegetation/FAE_Vegetation/MeshRenderer
+    2800000: FAE_TreeBush_Base Color
+    2800002: FAE_Vegetation_Atlas_output
+    2800004: FAE_Vegetation_Atlas_normal
+    2800006: FAE_Speedwell_billboard
+    2800008: FAE_TallGrass_billboard
+    2800010: Leaf_output
+    2800012: Lillypad_output
+    2800014: Lillypad_normal
+    2800016: Lotus_output
+    2800018: ElephantEar_output
+    2800020: FAE_Bush_billboard
+    3300000: FAE_Vegetation/FAE_Vegetation/MeshFilter
+    11400000: graph1
+    11400002: graph2
+    11400004: graph3
+    11400006: graph4
+    11400008: graph5
+    11400010: graph6
+    11400012: graph7
+    11400014: graph8
+    11400016: sbsar
+    11400018: graph0
+    13500000: FAE_Vegetation/FAE_Vegetation/SphereCollider
+    100100000: FAE_Vegetation
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
+  mGraphInstanceData:
+  - graphLabel: FAE_TreeBush
+    graphDescIndex: 0
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://FAE_TreeBush\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: Base Color
+    texturePackingList:
+    - outputName: Base Color
+      alphaSource: Base Color
+    colorSpaceList:
+    - outputName: Base Color
+      bLinear: 0
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100000, guid: f654a384396a5a245a9a41a56b8efbeb, type: 3}
+  - graphLabel: FAE_Vegetation_Atlas
+    graphDescIndex: 1
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://FAE_Vegetation_Atlas\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: output,normal
+    texturePackingList:
+    - outputName: output
+      alphaSource: output
+    - outputName: normal
+      alphaSource: normal
+    colorSpaceList:
+    - outputName: output
+      bLinear: 0
+    - outputName: normal
+      bLinear: 1
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100002, guid: f654a384396a5a245a9a41a56b8efbeb, type: 3}
+  - graphLabel: FAE_Speedwell
+    graphDescIndex: 2
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://Flowers/FAE_Speedwell\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: billboard
+    texturePackingList:
+    - outputName: billboard
+      alphaSource: billboard
+    colorSpaceList:
+    - outputName: billboard
+      bLinear: 0
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100004, guid: f654a384396a5a245a9a41a56b8efbeb, type: 3}
+  - graphLabel: FAE_TallGrass
+    graphDescIndex: 3
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://Flowers/FAE_TallGrass\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: billboard
+    texturePackingList:
+    - outputName: billboard
+      alphaSource: billboard
+    colorSpaceList:
+    - outputName: billboard
+      bLinear: 0
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100006, guid: f654a384396a5a245a9a41a56b8efbeb, type: 3}
+  - graphLabel: Leaf
+    graphDescIndex: 4
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://Flowers/Leaf\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: output
+    texturePackingList:
+    - outputName: output
+      alphaSource: alpha
+    - outputName: alpha
+      alphaSource: alpha
+    colorSpaceList:
+    - outputName: output
+      bLinear: 0
+    - outputName: alpha
+      bLinear: 1
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100008, guid: f654a384396a5a245a9a41a56b8efbeb, type: 3}
+  - graphLabel: Lillypad
+    graphDescIndex: 5
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://Flowers/Lillypad\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: output,normal
+    texturePackingList:
+    - outputName: output
+      alphaSource: output
+    - outputName: normal
+      alphaSource: normal
+    colorSpaceList:
+    - outputName: output
+      bLinear: 0
+    - outputName: normal
+      bLinear: 1
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100010, guid: f654a384396a5a245a9a41a56b8efbeb, type: 3}
+  - graphLabel: Lotus
+    graphDescIndex: 6
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://Flowers/Lotus\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: output
+    texturePackingList:
+    - outputName: output
+      alphaSource: output
+    colorSpaceList:
+    - outputName: output
+      bLinear: 0
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100012, guid: f654a384396a5a245a9a41a56b8efbeb, type: 3}
+  - graphLabel: ElephantEar
+    graphDescIndex: 7
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://Plants/ElephantEar\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: output
+    texturePackingList:
+    - outputName: output
+      alphaSource: output
+    colorSpaceList:
+    - outputName: output
+      bLinear: 0
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100014, guid: f654a384396a5a245a9a41a56b8efbeb, type: 3}
+  - graphLabel: FAE_Bush
+    graphDescIndex: 8
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://Plants/FAE_Bush\" label=\"\" >\n </sbspreset>\n"
+    shaderName: Standard
+    outputNames: billboard
+    texturePackingList:
+    - outputName: billboard
+      alphaSource: billboard
+    colorSpaceList:
+    - outputName: billboard
+      bLinear: 0
+    inputTextureMap: []
+    targetSettingList:
+    - label: Default
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: Standalone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    - label: iPhone
+      bOverride: 0
+      bLockRatio: 1
+      bHighQuality: 0
+      textureWidth: 256
+      textureHeight: 256
+      textureFormat: 0
+      loadBehavior: 0
+    material: {fileID: 2100016, guid: f654a384396a5a245a9a41a56b8efbeb, type: 3}

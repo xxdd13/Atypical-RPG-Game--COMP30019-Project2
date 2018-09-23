@@ -11,6 +11,9 @@ public class PlayerProjectile : MonoBehaviour
     public Vector3 impactNormal; //Used to rotate impactparticle.
  
     private bool hasCollided = false;
+
+    private float lifeTimer;
+    public float maxDuration = 10f;
  
     void Start()
     {
@@ -21,7 +24,14 @@ public class PlayerProjectile : MonoBehaviour
         Destroy(muzzleParticle, 1.5f); // Lifetime of muzzle effect.
 		}
     }
- 
+    void Update()
+    {
+        this.lifeTimer += Time.deltaTime;
+        if (this.lifeTimer >= maxDuration) {
+            Destroy(this.gameObject);
+        }
+    }
+
     void OnCollisionEnter(Collision hit)
     {
         if (!hasCollided)
@@ -46,7 +56,7 @@ public class PlayerProjectile : MonoBehaviour
             }
             Destroy(projectileParticle, 3f);
             Destroy(impactParticle, 5f);
-            Destroy(gameObject);
+            Destroy(this.gameObject);
             //projectileParticle.Stop();
 			
 			ParticleSystem[] trails = GetComponentsInChildren<ParticleSystem>();
