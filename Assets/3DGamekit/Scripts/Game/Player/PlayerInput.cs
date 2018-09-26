@@ -24,6 +24,9 @@ public class PlayerInput : MonoBehaviour
     protected bool m_ExternalInputBlocked;
     public bool RButton;
     public bool NukeButton;
+    public bool GuidedSpell;
+    public bool IceSword;
+
 
     public Vector2 MoveInput
     {
@@ -63,20 +66,28 @@ public class PlayerInput : MonoBehaviour
     WaitForSeconds m_AttackInputWait;
     WaitForSeconds m_RBInputWait;
     WaitForSeconds m_NukeInputWait;
+    WaitForSeconds m_GuidedSpellInputWait;
+    WaitForSeconds m_IceSwordInputWait;
 
     Coroutine m_AttackWaitCoroutine;
     Coroutine m_RBWaitCoroutine;
     Coroutine m_NukeWaitCoroutine;
+    Coroutine m_GuidedSpellWaitCoroutine;
+    Coroutine m_IceSwordWaitCoroutine;
 
     const float k_AttackInputDuration = 0.03f;
     const float k_RBInputDuration = 0.03f;
     const float k_NukeInputDuration = 0.01f;
+    const float k_GuidedSpellInputDuration = 0.01f;
+    const float k_IceSwordInputDuration = 0.01f;
 
     void Awake()
     {
         m_AttackInputWait = new WaitForSeconds(k_AttackInputDuration);
         m_RBInputWait = new WaitForSeconds(k_RBInputDuration);
         m_NukeInputWait = new WaitForSeconds(k_NukeInputDuration);
+        m_GuidedSpellInputWait = new WaitForSeconds(k_GuidedSpellInputDuration);
+        m_IceSwordInputWait = new WaitForSeconds(k_IceSwordInputDuration);
 
         if (s_Instance == null)
             s_Instance = this;
@@ -115,6 +126,26 @@ public class PlayerInput : MonoBehaviour
             Debug.Log("Pressed middle button.");
         }
 
+        //guidedSpell button q
+        if (Input.GetKeyDown("q"))
+        {
+            if (m_GuidedSpellWaitCoroutine != null)
+                StopCoroutine(m_GuidedSpellWaitCoroutine);
+
+            m_GuidedSpellWaitCoroutine = StartCoroutine(GuidedSpellWait());
+            Debug.Log("Pressed Q button.");
+        }
+
+        //icesword button e
+        if (Input.GetKeyDown("e"))
+        {
+            if (m_IceSwordWaitCoroutine != null)
+                StopCoroutine(m_IceSwordWaitCoroutine);
+
+            m_IceSwordWaitCoroutine = StartCoroutine(IceSwordWait());
+            Debug.Log("Pressed Q button.");
+        }
+
     }
 
     IEnumerator AttackWait()
@@ -141,6 +172,23 @@ public class PlayerInput : MonoBehaviour
 
         NukeButton = false;
     }
+    IEnumerator GuidedSpellWait()
+    {
+        GuidedSpell = true;
+
+        yield return m_GuidedSpellInputWait;
+
+        GuidedSpell = false;
+    }
+    IEnumerator IceSwordWait()
+    {
+        IceSword = true;
+
+        yield return m_IceSwordInputWait;
+
+        IceSword = false;
+    }
+
     public bool HaveControl()
     {
         return !m_ExternalInputBlocked;

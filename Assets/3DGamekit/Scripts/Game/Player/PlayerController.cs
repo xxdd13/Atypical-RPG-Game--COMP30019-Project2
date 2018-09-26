@@ -19,7 +19,7 @@ namespace Gamekit3D
 
         public bool respawning { get { return m_Respawning; } }
 
-        public float maxForwardSpeed = 8f;        // How fast Ellen can run.
+        public float maxForwardSpeed = 20f;        // How fast Ellen can run.
         public float gravity = 20f;               // How fast Ellen accelerates downwards when airborne.
         public float jumpSpeed = 10f;             // How fast Ellen takes off when jumping.
         public float minTurnSpeed = 400f;         // How fast Ellen turns when moving at maximum speed.
@@ -51,7 +51,7 @@ namespace Gamekit3D
         protected float m_VerticalSpeed;               // How fast Ellen is currently moving up or down.
         protected PlayerInput m_Input;                 // Reference used to determine how Ellen should move.
         protected CharacterController m_CharCtrl;      // Reference used to actually move Ellen.
-        protected Animator m_Animator;                 // Reference used to make decisions based on Ellen's current animation and to set parameters.
+        public Animator m_Animator;                 // Reference used to make decisions based on Ellen's current animation and to set parameters.
         protected Material m_CurrentWalkingSurface;    // Reference used to make decisions about audio.
         protected Quaternion m_TargetRotation;         // What rotation Ellen is aiming to have based on input.
         protected float m_AngleDiff;                   // Angle in degrees between Ellen's current rotation and her target rotation.
@@ -86,6 +86,8 @@ namespace Gamekit3D
         readonly int m_HashMeleeAttack = Animator.StringToHash("MeleeAttack");
         readonly int m_HashRButtonAttack = Animator.StringToHash("RButtonAttack");
         readonly int m_HashNuke = Animator.StringToHash("Nuke");
+        readonly int m_HashGunAuto = Animator.StringToHash("GunAuto");
+        readonly int m_HashIceSword = Animator.StringToHash("IceSword");
 
 
         readonly int m_HashHurt = Animator.StringToHash("Hurt");
@@ -220,10 +222,8 @@ namespace Gamekit3D
             if (m_Input.RButton && canAttack) {
                 if (cd.rb)
                 {
-                    
                     UpdateOrientation();
-                    m_Animator.SetTrigger(m_HashRButtonAttack);
-                    
+                    m_Animator.SetTrigger(m_HashRButtonAttack);         
                 }
                     
             }
@@ -234,9 +234,24 @@ namespace Gamekit3D
             {
                 UpdateOrientation();
                 m_Animator.SetTrigger(m_HashNuke);
-                
-                
             }
+
+
+            //guided spell
+            if (m_Input.GuidedSpell && canAttack && cd.guidedSpell)
+            {
+                UpdateOrientation();
+                m_Animator.SetTrigger(m_HashGunAuto);
+            }
+
+
+            //iceSword
+            if(m_Input.IceSword && canAttack && cd.iceSword)
+            {
+                UpdateOrientation();
+                m_Animator.SetTrigger(m_HashIceSword);
+            }
+
 
             if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("RButtonAttack") && cd.rb)
             {
@@ -247,14 +262,19 @@ namespace Gamekit3D
                 cd.nukeCast();
                 m_skill.nuke();
             }
-
-            //temp
-            if (Input.GetKeyDown("b"))
+            else if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("EllenGunShoot") && cd.guidedSpell)
             {
+                cd.guidedSpellCast();
                 m_skill.guidedTrigger = true;
-
-
             }
+            else if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("IceSword") && cd.iceSword)
+            {
+                cd.iceSwordCast();
+                m_skill.iceSwordTrigger = true;
+                //m_skill.iceSword();
+            }
+
+
             //teleport to gold dragon
             if (Input.GetKeyDown("t"))
             {
@@ -472,7 +492,7 @@ namespace Gamekit3D
         // Called each physics step to count up to the point where Ellen considers a random idle.
         void TimeoutToIdle()
         {
-            bool inputDetected = IsMoveInput || m_Input.Attack || m_Input.JumpInput || m_Input.RButton || m_Input.NukeButton;
+            bool inputDetected = IsMoveInput || m_Input.Attack || m_Input.JumpInput || m_Input.RButton || m_Input.NukeButton || m_Input.GuidedSpell || m_Input.IceSword;
             if (m_IsGrounded && !inputDetected)
             {
                 m_IdleTimer += Time.deltaTime;

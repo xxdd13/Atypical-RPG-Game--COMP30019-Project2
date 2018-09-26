@@ -7,12 +7,18 @@ public class PlayerSkill : MonoBehaviour {
     public GameObject rbSkill;
     public GameObject nukeSkill;
     public GameObject guidedSkill;
+    public GameObject smallIceSwordSkill;
+    public GameObject bigIceSwordSkill;
 
     public float speed = 1000;
     public Transform spawnPosition;
 
     public GameObject goldDragon;
 
+    private Animator m_Animator;
+
+    readonly int m_HashGunEnd = Animator.StringToHash("GunEnd");
+    readonly int m_HashGunAuto = Animator.StringToHash("GunAuto");
 
 
     //for guided arrow graduate generation
@@ -23,6 +29,11 @@ public class PlayerSkill : MonoBehaviour {
 
     internal bool guidedTrigger = false;
 
+    public int iceSwordNumber = 20;
+    int currentIceSwordNumber = 0;
+    internal bool iceSwordTrigger = false;
+
+
 
     /// xxxxxxxxxxxxxx
     /// 
@@ -32,9 +43,15 @@ public class PlayerSkill : MonoBehaviour {
         Physics.IgnoreLayerCollision(10, 11);
         Physics.IgnoreLayerCollision(11, 11);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void Awake()
+    {
+        m_Animator = this.gameObject.GetComponent<Gamekit3D.PlayerController>().m_Animator;
+    }
+
+
+    // Update is called once per frame
+    void Update () {
         if (guidedTrigger) {
             if (currentProjectileNumber < guidedSpellProjectileNumber)
             {
@@ -53,9 +70,32 @@ public class PlayerSkill : MonoBehaviour {
             {
                 guidedTrigger = false;
                 currentProjectileNumber = 0;
+                //put gun away
+                m_Animator.ResetTrigger(m_HashGunAuto);
+                m_Animator.SetTrigger(m_HashGunEnd);
+
             }
         }
-	}
+
+
+        //icesword
+        if (iceSwordTrigger)
+        {
+            if (currentIceSwordNumber < iceSwordNumber)
+            {
+                iceSword();
+                currentIceSwordNumber++;
+
+            }
+            if (currentIceSwordNumber >= iceSwordNumber)
+            {
+                iceSwordTrigger = false;
+                currentIceSwordNumber = 0;
+
+            }
+        }
+
+    }
     public void rb() {
         //ignore player and magic spell collision
 
@@ -107,6 +147,45 @@ public class PlayerSkill : MonoBehaviour {
 
         GuidedArrow missile = projectile.GetComponent<GuidedArrow>();
         missile.target = goldDragon.transform;
+
+    }
+
+    public void iceSword()
+    {
+
+        //for (int i = 0; i <= 20; i++) {iceSwordNumber
+        int i = currentIceSwordNumber;
+
+
+            float rnd4 = Random.Range(-2.0f, 2.0f);
+            float rnd = Random.Range(-15.0f, 15.0f);
+
+
+
+            Vector3 forwardPos = spawnPosition.position + spawnPosition.forward * ((float)i/2f);
+            Vector3 swordPosition = forwardPos + spawnPosition.right * (rnd4);
+            GameObject projectile;
+            if (i >= 19)
+            {
+                projectile = Instantiate(bigIceSwordSkill, forwardPos, this.transform.rotation) as GameObject;
+                
+
+
+
+            }
+            else {
+                projectile = Instantiate(smallIceSwordSkill, swordPosition, this.transform.rotation) as GameObject;
+                projectile.transform.rotation *= Quaternion.Euler(rnd, rnd4, rnd);
+
+            }
+            projectile.GetComponent<IceSwordMove>().goalHeight = this.transform.position.y+0.6f;
+            projectile.GetComponent<IceSwordMove>().goalSet = true;
+            projectile.transform.position = new Vector3(projectile.transform.position.x, this.transform.position.y-i, projectile.transform.position.z);
+
+
+        //}
+
+        
 
 
 
