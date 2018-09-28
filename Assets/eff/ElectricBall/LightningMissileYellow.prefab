@@ -30,8 +30,6 @@ GameObject:
   - component: {fileID: 10828626}
   - component: {fileID: 8272474}
   - component: {fileID: 114229030222812634}
-  - component: {fileID: 114538971728178162}
-  - component: {fileID: 135689612165500406}
   m_Layer: 0
   m_Name: LightningMissileYellow
   m_TagString: Untagged
@@ -22910,34 +22908,3 @@ MonoBehaviour:
   RaycastAdvance: 2
   DelayDespawn: 1
   delayedParticles: []
---- !u!114 &114538971728178162
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 145690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05cf15f0f3c811d47b802c309648aed4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  helpString: "\r\nRemember to have a collider set to trigger on this object or one
-    of its children!\r\nAlso Remember to place that object in a layer that collide
-    with what you want to damage \r\n(e.g. the Enemy layer does not collide with the
-    Player layer, so add it to a child in a different layer)\r\n"
-  amount: 1
-  damagedLayers:
-    serializedVersion: 2
-    m_Bits: 8192
---- !u!135 &135689612165500406
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 145690}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}

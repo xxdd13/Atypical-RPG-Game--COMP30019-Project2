@@ -26,6 +26,7 @@ public class PlayerInput : MonoBehaviour
     public bool NukeButton;
     public bool GuidedSpell;
     public bool IceSword;
+    public bool Ballista;
 
 
     public Vector2 MoveInput
@@ -68,18 +69,21 @@ public class PlayerInput : MonoBehaviour
     WaitForSeconds m_NukeInputWait;
     WaitForSeconds m_GuidedSpellInputWait;
     WaitForSeconds m_IceSwordInputWait;
+    WaitForSeconds m_BallistaInputWait;
 
     Coroutine m_AttackWaitCoroutine;
     Coroutine m_RBWaitCoroutine;
     Coroutine m_NukeWaitCoroutine;
     Coroutine m_GuidedSpellWaitCoroutine;
     Coroutine m_IceSwordWaitCoroutine;
+    Coroutine m_BallistaWaitCoroutine;
 
     const float k_AttackInputDuration = 0.03f;
     const float k_RBInputDuration = 0.03f;
     const float k_NukeInputDuration = 0.01f;
     const float k_GuidedSpellInputDuration = 0.01f;
     const float k_IceSwordInputDuration = 0.01f;
+    const float k_BallistaInputDuration = 0.01f;
 
     void Awake()
     {
@@ -88,6 +92,7 @@ public class PlayerInput : MonoBehaviour
         m_NukeInputWait = new WaitForSeconds(k_NukeInputDuration);
         m_GuidedSpellInputWait = new WaitForSeconds(k_GuidedSpellInputDuration);
         m_IceSwordInputWait = new WaitForSeconds(k_IceSwordInputDuration);
+        m_BallistaInputWait = new WaitForSeconds(k_BallistaInputDuration);
 
         if (s_Instance == null)
             s_Instance = this;
@@ -146,6 +151,16 @@ public class PlayerInput : MonoBehaviour
             Debug.Log("Pressed Q button.");
         }
 
+        //ballista button r
+        if (Input.GetKeyDown("r"))
+        {
+            if (m_BallistaWaitCoroutine != null)
+                StopCoroutine(m_BallistaWaitCoroutine);
+
+            m_BallistaWaitCoroutine = StartCoroutine(BallistaWait());
+            Debug.Log("Pressed R button.");
+        }
+
     }
 
     IEnumerator AttackWait()
@@ -187,6 +202,14 @@ public class PlayerInput : MonoBehaviour
         yield return m_IceSwordInputWait;
 
         IceSword = false;
+    }
+    IEnumerator BallistaWait()
+    {
+        Ballista = true;
+
+        yield return m_BallistaInputWait;
+
+        Ballista = false;
     }
 
     public bool HaveControl()

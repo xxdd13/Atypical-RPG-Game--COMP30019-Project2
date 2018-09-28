@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
-namespace Gamekit3D
+namespace Proj2
 {
     public class CameraSettings : MonoBehaviour
     {

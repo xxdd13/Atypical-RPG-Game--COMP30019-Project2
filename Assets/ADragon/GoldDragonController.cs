@@ -15,14 +15,17 @@ public class GoldDragonController : MonoBehaviour {
     private GameObject instantiatedMagicCircle;
     private GameObject instantiatedBlocker;
 
+
     // Use this for initialization
     void Start () {
         m_Animator = GetComponent<Animator>();
         circleDone = false;
+        this.enabled = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
+
         if (!circleDone && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("ad-loop"))
         {
 

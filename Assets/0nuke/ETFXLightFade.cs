@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace EpicToonFX
+namespace Proj2
 {
     public class ETFXLightFade : MonoBehaviour
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gamekit3D
+namespace CameraSettings
 {
     [DefaultExecutionOrder(9999)]
     public class FixedUpdateFollow : MonoBehaviour

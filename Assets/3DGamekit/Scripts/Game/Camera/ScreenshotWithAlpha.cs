@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Gamekit3D
+namespace Proj2
 {
     [RequireComponent(typeof(Camera))]
     public class ScreenshotWithAlpha : MonoBehaviour

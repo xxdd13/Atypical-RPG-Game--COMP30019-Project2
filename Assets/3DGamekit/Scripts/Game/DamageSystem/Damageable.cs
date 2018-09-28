@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using Gamekit3D.Message;
+using Proj2.Message;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
-namespace Gamekit3D
+namespace Proj2
 {
     public partial class Damageable : MonoBehaviour
     {
@@ -32,8 +32,7 @@ namespace Gamekit3D
 
         public UnityEvent OnDeath, OnReceiveDamage, OnHitWhileInvulnerable, OnBecomeVulnerable, OnResetDamage;
 
-        [Tooltip("When this gameObject is damaged, these other gameObjects are notified.")]
-        [EnforceType(typeof(Message.IMessageReceiver))]
+        
         public List<MonoBehaviour> onDamageMessageReceivers;
 
         protected float m_timeSinceLastHit = 0.0f;

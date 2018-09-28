@@ -1,8 +1,8 @@
 using UnityEngine;
-using Gamekit3D.Message;
+using Proj2.Message;
 using System.Collections;
 
-namespace Gamekit3D
+namespace Proj2
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(Animator))]
@@ -60,7 +60,7 @@ namespace Gamekit3D
         protected bool m_InCombo;                      // Whether Ellen is currently in the middle of her melee combo.
         protected Damageable m_Damageable;             // Reference used to set invulnerablity and health based on respawning.
         protected Renderer[] m_Renderers;              // References used to make sure Renderers are reset properly. 
-        protected Checkpoint m_CurrentCheckpoint;      // Reference used to reset Ellen to the correct position on respawn.
+        
         protected bool m_Respawning;                   // Whether Ellen is currently respawning.
         protected float m_IdleTimer;                   // Used to count up to Ellen considering a random idle.
 
@@ -88,6 +88,7 @@ namespace Gamekit3D
         readonly int m_HashNuke = Animator.StringToHash("Nuke");
         readonly int m_HashGunAuto = Animator.StringToHash("GunAuto");
         readonly int m_HashIceSword = Animator.StringToHash("IceSword");
+        readonly int m_HashBallista = Animator.StringToHash("Ballista");
 
 
         readonly int m_HashHurt = Animator.StringToHash("Hurt");
@@ -179,7 +180,7 @@ namespace Gamekit3D
         // Called automatically by Unity after Awake whenever the script is enabled. 
         void OnEnable()
         {
-            SceneLinkedSMB<PlayerController>.Initialise(m_Animator, this);
+            //SceneLinkedSMB<PlayerController>.Initialise(m_Animator, this);
 
             m_Damageable = GetComponent<Damageable>();
             m_Damageable.onDamageMessageReceivers.Add(this);
@@ -252,6 +253,13 @@ namespace Gamekit3D
                 m_Animator.SetTrigger(m_HashIceSword);
             }
 
+            //ballista
+            if (m_Input.Ballista && canAttack && cd.ballista)
+            {
+                UpdateOrientation();
+                m_Animator.SetTrigger(m_HashBallista);
+            }
+
 
             if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("RButtonAttack") && cd.rb)
             {
@@ -271,7 +279,12 @@ namespace Gamekit3D
             {
                 cd.iceSwordCast();
                 m_skill.iceSwordTrigger = true;
-                //m_skill.iceSword();
+            }
+            else if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Ballista") && cd.ballista)
+            {
+                cd.ballistaCast();
+                m_skill.ballista();
+
             }
 
 
@@ -492,7 +505,7 @@ namespace Gamekit3D
         // Called each physics step to count up to the point where Ellen considers a random idle.
         void TimeoutToIdle()
         {
-            bool inputDetected = IsMoveInput || m_Input.Attack || m_Input.JumpInput || m_Input.RButton || m_Input.NukeButton || m_Input.GuidedSpell || m_Input.IceSword;
+            bool inputDetected = IsMoveInput || m_Input.Attack || m_Input.JumpInput || m_Input.RButton || m_Input.NukeButton || m_Input.GuidedSpell || m_Input.IceSword || m_Input.Ballista;
             if (m_IsGrounded && !inputDetected)
             {
                 m_IdleTimer += Time.deltaTime;
@@ -581,12 +594,7 @@ namespace Gamekit3D
             m_InAttack = false;
         }
 
-        // This is called by Checkpoints to make sure Ellen respawns correctly.
-        public void SetCheckpoint(Checkpoint checkpoint)
-        {
-            if (checkpoint != null)
-                m_CurrentCheckpoint = checkpoint;
-        }
+       
 
         // This is usually called by a state machine behaviour on the animator controller but can be called from anywhere.
         public void Respawn()
@@ -613,16 +621,7 @@ namespace Gamekit3D
             EllenSpawn spawn = GetComponentInChildren<EllenSpawn>();
             spawn.enabled = true;
 
-            // If there is a checkpoint, move Ellen to it.
-            if (m_CurrentCheckpoint != null)
-            {
-                transform.position = m_CurrentCheckpoint.transform.position;
-                transform.rotation = m_CurrentCheckpoint.transform.rotation;
-            }
-            else
-            {
-                Debug.LogError("There is no Checkpoint set, there should always be a checkpoint set. Did you add a checkpoint at the spawn?");
-            }
+            
 
             // Get Ellen's health back.
             m_Damageable.ResetDamage();
@@ -635,7 +634,7 @@ namespace Gamekit3D
             
             // Wait for the screen to fade in.
             // Currently it is not important to yield here but should some changes occur that require waiting until a respawn has finished this will be required.
-            yield return StartCoroutine(ScreenFader.FadeSceneIn());
+            
         }
 
         // Called by a state machine behaviour on Ellen's animator controller.

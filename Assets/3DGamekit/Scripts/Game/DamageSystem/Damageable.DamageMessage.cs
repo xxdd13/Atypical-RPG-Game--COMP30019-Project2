@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Gamekit3D
+namespace Proj2
 {
     public partial class Damageable : MonoBehaviour
     {
