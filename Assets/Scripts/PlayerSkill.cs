@@ -12,6 +12,7 @@ namespace Proj2
         public GameObject smallIceSwordSkill;
         public GameObject bigIceSwordSkill;
         public GameObject ballistaSkill;
+        public GameObject crossSkill;
 
         public float speed = 1000;
         public Transform spawnPosition;
@@ -221,6 +222,20 @@ namespace Proj2
             projectile.transform.LookAt(pos + spawnPosition.forward * 3f);
 
             //projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * speed);
+
+        }
+
+        public void cross()
+        {
+            Vector3 forwardPos = spawnPosition.position + spawnPosition.forward * 10;
+            Vector3 newPos = new Vector3(forwardPos.x, forwardPos.y + 20f, forwardPos.z);
+
+
+            GameObject projectile = Instantiate(crossSkill, newPos, spawnPosition.transform.rotation) as GameObject;
+            
+
+
+
 
         }
 

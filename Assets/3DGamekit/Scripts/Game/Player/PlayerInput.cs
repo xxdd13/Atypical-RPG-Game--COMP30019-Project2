@@ -27,6 +27,7 @@ public class PlayerInput : MonoBehaviour
     public bool GuidedSpell;
     public bool IceSword;
     public bool Ballista;
+    public bool Cross;
 
 
     public Vector2 MoveInput
@@ -70,6 +71,7 @@ public class PlayerInput : MonoBehaviour
     WaitForSeconds m_GuidedSpellInputWait;
     WaitForSeconds m_IceSwordInputWait;
     WaitForSeconds m_BallistaInputWait;
+    WaitForSeconds m_CrossInputWait;
 
     Coroutine m_AttackWaitCoroutine;
     Coroutine m_RBWaitCoroutine;
@@ -77,6 +79,7 @@ public class PlayerInput : MonoBehaviour
     Coroutine m_GuidedSpellWaitCoroutine;
     Coroutine m_IceSwordWaitCoroutine;
     Coroutine m_BallistaWaitCoroutine;
+    Coroutine m_CrossWaitCoroutine;
 
     const float k_AttackInputDuration = 0.03f;
     const float k_RBInputDuration = 0.03f;
@@ -84,6 +87,7 @@ public class PlayerInput : MonoBehaviour
     const float k_GuidedSpellInputDuration = 0.01f;
     const float k_IceSwordInputDuration = 0.01f;
     const float k_BallistaInputDuration = 0.01f;
+    const float k_CrossInputDuration = 0.01f;
 
     void Awake()
     {
@@ -93,6 +97,7 @@ public class PlayerInput : MonoBehaviour
         m_GuidedSpellInputWait = new WaitForSeconds(k_GuidedSpellInputDuration);
         m_IceSwordInputWait = new WaitForSeconds(k_IceSwordInputDuration);
         m_BallistaInputWait = new WaitForSeconds(k_BallistaInputDuration);
+        m_CrossInputWait = new WaitForSeconds(k_CrossInputDuration);
 
         if (s_Instance == null)
             s_Instance = this;
@@ -161,6 +166,17 @@ public class PlayerInput : MonoBehaviour
             Debug.Log("Pressed R button.");
         }
 
+
+        //cross button f
+        if (Input.GetKeyDown("f"))
+        {
+            if (m_CrossWaitCoroutine != null)
+                StopCoroutine(m_CrossWaitCoroutine);
+
+            m_CrossWaitCoroutine = StartCoroutine(CrossWait());
+            Debug.Log("Pressed R button.");
+        }
+
     }
 
     IEnumerator AttackWait()
@@ -210,6 +226,14 @@ public class PlayerInput : MonoBehaviour
         yield return m_BallistaInputWait;
 
         Ballista = false;
+    }
+    IEnumerator CrossWait()
+    {
+        Cross = true;
+
+        yield return m_CrossInputWait;
+
+        Cross = false;
     }
 
     public bool HaveControl()

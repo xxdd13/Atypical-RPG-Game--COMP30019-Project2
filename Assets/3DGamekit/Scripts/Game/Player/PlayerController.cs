@@ -75,20 +75,22 @@ namespace Proj2
         const float k_GroundAcceleration = 20f;
         const float k_GroundDeceleration = 25f;
 
-        // Parameters
 
-        readonly int m_HashAirborneVerticalSpeed = Animator.StringToHash("AirborneVerticalSpeed");
-        readonly int m_HashForwardSpeed = Animator.StringToHash("ForwardSpeed");
-        readonly int m_HashAngleDeltaRad = Animator.StringToHash("AngleDeltaRad");
-        readonly int m_HashTimeoutToIdle = Animator.StringToHash("TimeoutToIdle");
-        readonly int m_HashGrounded = Animator.StringToHash("Grounded");
-        readonly int m_HashInputDetected = Animator.StringToHash("InputDetected");
-        readonly int m_HashMeleeAttack = Animator.StringToHash("MeleeAttack");
-        readonly int m_HashRButtonAttack = Animator.StringToHash("RButtonAttack");
-        readonly int m_HashNuke = Animator.StringToHash("Nuke");
-        readonly int m_HashGunAuto = Animator.StringToHash("GunAuto");
-        readonly int m_HashIceSword = Animator.StringToHash("IceSword");
-        readonly int m_HashBallista = Animator.StringToHash("Ballista");
+        // animator param 
+
+        protected int ParamAirVSpeed = Animator.StringToHash("AirborneVerticalSpeed");
+        protected int ParamForwardSpeed = Animator.StringToHash("ForwardSpeed");
+        protected int ParamAngleRand = Animator.StringToHash("AngleDeltaRad");
+        protected int TriggerParamIdle = Animator.StringToHash("TimeoutToIdle");
+        protected int TriggerParamGround = Animator.StringToHash("Grounded");
+        protected int TriggerParamInput = Animator.StringToHash("InputDetected");
+        protected int TriggerParamMelee = Animator.StringToHash("MeleeAttack");
+        protected int TriggerParamRB = Animator.StringToHash("RButtonAttack");
+        protected int TriggerParamNuke = Animator.StringToHash("Nuke");
+        protected int TriggerParamGunAuto = Animator.StringToHash("GunAuto");
+        protected int TriggerParamIceSword = Animator.StringToHash("IceSword");
+        protected int TriggerParamBallista = Animator.StringToHash("Ballista");
+        protected int TriggerParamCross = Animator.StringToHash("cross");
 
 
         readonly int m_HashHurt = Animator.StringToHash("Hurt");
@@ -213,18 +215,18 @@ namespace Proj2
             EquipMeleeWeapon(IsWeaponEquiped());
 
             m_Animator.SetFloat(m_HashStateTime, Mathf.Repeat(m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
-            m_Animator.ResetTrigger(m_HashMeleeAttack);
+            m_Animator.ResetTrigger(TriggerParamMelee);
 
-            m_Animator.ResetTrigger(m_HashRButtonAttack);
+            m_Animator.ResetTrigger(TriggerParamRB);
 
             if (m_Input.Attack && canAttack)
-                m_Animator.SetTrigger(m_HashMeleeAttack);
+                m_Animator.SetTrigger(TriggerParamMelee);
 
             if (m_Input.RButton && canAttack) {
                 if (cd.rb)
                 {
                     UpdateOrientation();
-                    m_Animator.SetTrigger(m_HashRButtonAttack);         
+                    m_Animator.SetTrigger(TriggerParamRB);         
                 }
                     
             }
@@ -234,7 +236,7 @@ namespace Proj2
             if (m_Input.NukeButton && canAttack && cd.nuke)
             {
                 UpdateOrientation();
-                m_Animator.SetTrigger(m_HashNuke);
+                m_Animator.SetTrigger(TriggerParamNuke);
             }
 
 
@@ -242,7 +244,7 @@ namespace Proj2
             if (m_Input.GuidedSpell && canAttack && cd.guidedSpell)
             {
                 UpdateOrientation();
-                m_Animator.SetTrigger(m_HashGunAuto);
+                m_Animator.SetTrigger(TriggerParamGunAuto);
             }
 
 
@@ -250,14 +252,21 @@ namespace Proj2
             if(m_Input.IceSword && canAttack && cd.iceSword)
             {
                 UpdateOrientation();
-                m_Animator.SetTrigger(m_HashIceSword);
+                m_Animator.SetTrigger(TriggerParamIceSword);
             }
 
             //ballista
             if (m_Input.Ballista && canAttack && cd.ballista)
             {
                 UpdateOrientation();
-                m_Animator.SetTrigger(m_HashBallista);
+                m_Animator.SetTrigger(TriggerParamBallista);
+            }
+
+            //cross
+            if (m_Input.Cross && canAttack && cd.cross)
+            {
+                UpdateOrientation();
+                m_Animator.SetTrigger(TriggerParamCross);
             }
 
 
@@ -286,6 +295,12 @@ namespace Proj2
                 m_skill.ballista();
 
             }
+            else if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("cross-exec") && cd.cross)
+            {
+                cd.crossCast();
+                m_skill.cross();
+
+            }
 
 
             //teleport to gold dragon
@@ -296,10 +311,9 @@ namespace Proj2
 
             }
             //teleport to final boss
-            if (Input.GetKeyDown("f"))
+            if (Input.GetKeyDown("b"))
             {
                 this.transform.position = new Vector3(-71.01f, 116f, -256f);
-
 
             }
 
@@ -360,7 +374,7 @@ namespace Proj2
             m_InCombo = equip;
 
             if (!equip)
-                m_Animator.ResetTrigger(m_HashMeleeAttack);
+                m_Animator.ResetTrigger(TriggerParamMelee);
         }
 
         // Called each physics step.
@@ -381,7 +395,7 @@ namespace Proj2
             m_ForwardSpeed = Mathf.MoveTowards(m_ForwardSpeed, m_DesiredForwardSpeed, acceleration * Time.deltaTime);
 
             // Set the animator parameter to control what animation is being played.
-            m_Animator.SetFloat(m_HashForwardSpeed, m_ForwardSpeed);
+            m_Animator.SetFloat(ParamForwardSpeed, m_ForwardSpeed);
         }
 
         // Called each physics step.
@@ -505,7 +519,7 @@ namespace Proj2
         // Called each physics step to count up to the point where Ellen considers a random idle.
         void TimeoutToIdle()
         {
-            bool inputDetected = IsMoveInput || m_Input.Attack || m_Input.JumpInput || m_Input.RButton || m_Input.NukeButton || m_Input.GuidedSpell || m_Input.IceSword || m_Input.Ballista;
+            bool inputDetected = IsMoveInput || m_Input.Attack || m_Input.JumpInput || m_Input.RButton || m_Input.NukeButton || m_Input.GuidedSpell || m_Input.IceSword || m_Input.Ballista || m_Input.Cross;
             if (m_IsGrounded && !inputDetected)
             {
                 m_IdleTimer += Time.deltaTime;
@@ -513,16 +527,16 @@ namespace Proj2
                 if (m_IdleTimer >= idleTimeout)
                 {
                     m_IdleTimer = 0f;
-                    m_Animator.SetTrigger(m_HashTimeoutToIdle);
+                    m_Animator.SetTrigger(TriggerParamIdle);
                 }
             }
             else
             {
                 m_IdleTimer = 0f;
-                m_Animator.ResetTrigger(m_HashTimeoutToIdle);
+                m_Animator.ResetTrigger(TriggerParamIdle);
             }
 
-            m_Animator.SetBool(m_HashInputDetected, inputDetected);
+            m_Animator.SetBool(TriggerParamInput, inputDetected);
         }
 
         // Called each physics step (so long as the Animator component is set to Animate Physics) after FixedUpdate to override root motion.
@@ -574,10 +588,10 @@ namespace Proj2
             // If Ellen is not on the ground then send the vertical speed to the animator.
             // This is so the vertical speed is kept when landing so the correct landing animation is played.
             if (!m_IsGrounded)
-                m_Animator.SetFloat(m_HashAirborneVerticalSpeed, m_VerticalSpeed);
+                m_Animator.SetFloat(ParamAirVSpeed, m_VerticalSpeed);
 
             // Send whether or not Ellen is on the ground to the animator.
-            m_Animator.SetBool(m_HashGrounded, m_IsGrounded);
+            m_Animator.SetBool(TriggerParamGround, m_IsGrounded);
         }
         
         // This is called by an animation event when Ellen swings her staff.

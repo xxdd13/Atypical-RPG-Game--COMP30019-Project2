@@ -8,18 +8,21 @@ public class PlayerCoolDown : MonoBehaviour {
     public float guidedSpellCoolDown = 3f;
     public float IceSwordCoolDown = 3f;
     public float BallistaCoolDown = 5f;
+    public float CrossCoolDown = 2f;
 
     public bool rb = true;
     public bool nuke = true;
     public bool guidedSpell = true;
     public bool iceSword = true;
     public bool ballista = true;
+    public bool cross = true;
 
     public float rbCD;
     public float nukeCD;
     public float guidedSpellCD;
     public float iceSwordCD;
     public float ballistaCD;
+    public float crossCD;
 
 
     // Use this for initialization
@@ -49,12 +52,17 @@ public class PlayerCoolDown : MonoBehaviour {
         {
             ballistaCD += Time.deltaTime;
         }
+        if (!cross)
+        {
+            crossCD += Time.deltaTime;
+        }
 
         if (rbCD >= rbCoolDown) { rb = true; rbCD = 0f; }
         if (nukeCD >= nukeCoolDown) { nuke = true; nukeCD = 0f;  }
         if (guidedSpellCD >= guidedSpellCoolDown) { guidedSpell = true; guidedSpellCD = 0f; }
         if (iceSwordCD >= IceSwordCoolDown) { iceSword = true; iceSwordCD = 0f; }
         if (ballistaCD >= BallistaCoolDown) { ballista = true; ballistaCD = 0f; }
+        if (crossCD >= CrossCoolDown) { cross = true; crossCD = 0f; }
 
     }
     public void rbCast() {
@@ -75,5 +83,9 @@ public class PlayerCoolDown : MonoBehaviour {
     public void ballistaCast()
     {
         ballista = false;
+    }
+    public void crossCast()
+    {
+        cross = false;
     }
 }

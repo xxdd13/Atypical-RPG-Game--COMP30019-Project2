@@ -1,0 +1,257 @@
+fileFormatVersion: 2
+guid: 735b34d639daff24fbc6f92aa993e6ee
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: 1.001
+    100002: 10.001
+    100004: 11.001
+    100006: 12.001
+    100008: 13.001
+    100010: 14.001
+    100012: 15.001
+    100014: 16.001
+    100016: 17.001
+    100018: 18.001
+    100020: 19.001
+    100022: 2.001
+    100024: 3.001
+    100026: 4.001
+    100028: 5.001
+    100030: 6.001
+    100032: 7.001
+    100034: 8.001
+    100036: 9.001
+    100038: _Dummy01
+    100040: _Dummy02
+    100042: _Dummy03
+    100044: _Dummy04
+    100046: _Dummy05
+    100048: _Dummy06
+    100050: _Dummy07
+    100052: _Dummy08
+    100054: _Dummy09
+    100056: Bone01
+    100058: Bone02
+    100060: Bone03
+    100062: Bone05
+    100064: Bone07
+    100066: Bone09
+    100068: Bone11
+    100070: Bone13
+    100072: Bone15
+    100074: Bone17
+    100076: Bone19
+    100078: //RootNode
+    100080: pose
+    100082: Scene_Root
+    400000: 1.001
+    400002: 10.001
+    400004: 11.001
+    400006: 12.001
+    400008: 13.001
+    400010: 14.001
+    400012: 15.001
+    400014: 16.001
+    400016: 17.001
+    400018: 18.001
+    400020: 19.001
+    400022: 2.001
+    400024: 3.001
+    400026: 4.001
+    400028: 5.001
+    400030: 6.001
+    400032: 7.001
+    400034: 8.001
+    400036: 9.001
+    400038: _Dummy01
+    400040: _Dummy02
+    400042: _Dummy03
+    400044: _Dummy04
+    400046: _Dummy05
+    400048: _Dummy06
+    400050: _Dummy07
+    400052: _Dummy08
+    400054: _Dummy09
+    400056: Bone01
+    400058: Bone02
+    400060: Bone03
+    400062: Bone05
+    400064: Bone07
+    400066: Bone09
+    400068: Bone11
+    400070: Bone13
+    400072: Bone15
+    400074: Bone17
+    400076: Bone19
+    400078: //RootNode
+    400080: pose
+    400082: Scene_Root
+    2100000: EffectProp01.037
+    2100002: EffectProp01.036
+    2100004: EffectProp01.035
+    2100006: EffectProp01.034
+    2100008: EffectProp01.033
+    2100010: EffectProp01.032
+    2100012: EffectProp01.031
+    2100014: EffectProp01.030
+    2100016: EffectProp01.029
+    2100018: EffectProp01.028
+    2100020: EffectProp01.027
+    2100022: EffectProp01.026
+    2100024: EffectProp01.025
+    2100026: EffectProp01.024
+    2100028: EffectProp01.023
+    2100030: EffectProp01.022
+    2100032: EffectProp01.021
+    2100034: EffectProp01.020
+    2100036: EffectProp01.019
+    4300000: 8.001
+    4300002: 17.001
+    4300004: 18.001
+    4300006: 16.001
+    4300008: 14.001
+    4300010: 15.001
+    4300012: 9.001
+    4300014: 10.001
+    4300016: 19.001
+    4300018: 11.001
+    4300020: 7.001
+    4300022: 12.001
+    4300024: 13.001
+    4300026: 6.001
+    4300028: 4.001
+    4300030: 5.001
+    4300032: 3.001
+    4300034: 2.001
+    4300036: 1.001
+    7400000: BoomDefault Take
+    9500000: //RootNode
+    13700000: 1.001
+    13700002: 10.001
+    13700004: 11.001
+    13700006: 12.001
+    13700008: 13.001
+    13700010: 14.001
+    13700012: 15.001
+    13700014: 16.001
+    13700016: 17.001
+    13700018: 18.001
+    13700020: 19.001
+    13700022: 2.001
+    13700024: 3.001
+    13700026: 4.001
+    13700028: 5.001
+    13700030: 6.001
+    13700032: 7.001
+    13700034: 8.001
+    13700036: 9.001
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: BoomDefault Take
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 149
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

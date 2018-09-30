@@ -19,7 +19,7 @@ public class ArrowSH : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown("n"))
         {
-            this.transform.position = this.transform.position+transform.forward;
+            //this.transform.position = this.transform.position+transform.forward;
 
 
         }
