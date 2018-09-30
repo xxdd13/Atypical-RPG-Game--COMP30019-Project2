@@ -234,6 +234,33 @@ namespace Proj2
             GameObject projectile = Instantiate(crossSkill, newPos, spawnPosition.transform.rotation) as GameObject;
             
 
+        }
+
+        public void teleport()
+        {
+            RaycastHit hit;
+            Vector3 forwardPos = spawnPosition.transform.position; ;// + transform.forward;
+            if (Physics.Raycast(forwardPos, spawnPosition.transform.forward, out hit, 12f, 11)) {
+                if (hit.collider != null) //need to stop right before collision
+                {
+                    print(hit.collider.gameObject.name);
+                    Vector3 teleportPos = hit.point - (spawnPosition.transform.forward); //don't wanna stuck, so step back a few units
+                                                                                         //this.transform.position = teleportPos;
+                    this.gameObject.transform.position = teleportPos;
+                    //GameObject projectile = Instantiate(rbSkill, teleportPos, spawnPosition.transform.rotation) as GameObject;
+                }
+                else
+                { // hit nothing, just eleport
+                    this.gameObject.transform.position += this.gameObject.transform.forward * 12f;
+                }
+            }
+            else
+            { // hit nothing, just eleport
+                this.gameObject.transform.position += this.gameObject.transform.forward * 12f;
+            }
+
+
+
 
 
 

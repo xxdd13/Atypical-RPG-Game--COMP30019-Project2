@@ -41,6 +41,9 @@ public class ArrowSH : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
+        //dont wanna play hit sound too freq
+        if(Random.Range(0, 3) == 1)
+            this.GetComponents<AudioSource>()[3].Play();
         hit = true;
         rb.angularVelocity = new Vector3(0f, 0f, 0f);
         rb.isKinematic = true;

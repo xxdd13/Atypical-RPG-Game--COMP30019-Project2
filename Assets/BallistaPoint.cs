@@ -8,6 +8,8 @@ public class BallistaPoint : MonoBehaviour {
     public GameObject target;
     public GameObject smoke;
 
+    public float readyTime = 1f;
+
 
     public float shootDelay = 0.05f;
     private float timer = 0f;
@@ -29,6 +31,11 @@ public class BallistaPoint : MonoBehaviour {
         //turn to target
         if (target != null) {
             FaceTarget();
+        }
+
+        if (readyTime > 0) {
+            readyTime -= Time.deltaTime;
+            return;
         }
 
         //for (int i = 0; i <= 20; i++) {iceSwordNumber

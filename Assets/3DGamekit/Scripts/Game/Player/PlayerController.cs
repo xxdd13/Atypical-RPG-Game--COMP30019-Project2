@@ -11,6 +11,8 @@ namespace Proj2
         /// xxxxxxxxxxxxxxx
         public PlayerSkill m_skill;
 
+        private Rigidbody rb;
+
         
 
         /// xxxxxxxxxxxxxx
@@ -117,6 +119,9 @@ namespace Proj2
 
         private PlayerCoolDown cd;
 
+        private bool teleported = false;
+        private int tpFrame = 4;
+
         protected bool IsMoveInput
         {
             get { return !Mathf.Approximately(m_Input.MoveInput.sqrMagnitude, 0f); }
@@ -162,7 +167,7 @@ namespace Proj2
             m_Input = GetComponent<PlayerInput>();
             m_Animator = GetComponent<Animator>();
             m_CharCtrl = GetComponent<CharacterController>();
-
+            rb = GetComponent<Rigidbody>();
 
             /////xxxxxxxxxxxxxxxxx
             cd = GetComponent<PlayerCoolDown>();
@@ -303,6 +308,41 @@ namespace Proj2
             }
 
 
+            //blink skills
+            if (Input.GetKeyUp(KeyCode.LeftShift) ) {
+                RaycastHit hit;
+                Vector3 forwardPos = transform.position + transform.forward;
+                m_skill.teleport();
+                /**
+                Physics.Raycast(forwardPos, transform.forward, out hit, 12f);
+                    if (hit.collider != null) //need to stop right before collision
+                    {
+                        print(hit.collider.gameObject.name);
+                        Vector3 teleportPos = hit.point - (transform.forward); //don't wanna stuck, so step back a few units
+                        this.transform.position = teleportPos;
+                    }
+                    else
+                    { // hit nothing, just eleport
+                        this.transform.position += this.transform.forward * 12f;
+                    }
+
+                
+                **/
+
+                /**
+                rb.AddForce(transform.forward * 100f, ForceMode.Impulse);
+
+                //teleport force added
+                teleported = true;
+                tpFrame = 30;
+
+                **/
+
+
+
+
+            }
+
             //teleport to gold dragon
             if (Input.GetKeyDown("t"))
             {
@@ -333,6 +373,28 @@ namespace Proj2
             TimeoutToIdle();
 
             m_PreviouslyGrounded = m_IsGrounded;
+
+            /*
+            if (teleported) {
+                if (tpFrame <= 0)
+                {
+                    rb.isKinematic = true;
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    teleported = false;
+                    print("stop");
+                    
+                }
+                else {
+                    
+                    tpFrame -= 1 ;
+                }
+                
+                
+            }
+            rb.isKinematic = false;
+            */
+
         }
 
         // Called at the start of FixedUpdate to record the current state of the base layer of the animator.
