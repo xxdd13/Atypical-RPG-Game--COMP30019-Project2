@@ -41,8 +41,7 @@ public class IceDragonController : MonoBehaviour {
         if (Input.GetKeyDown("x"))
         {
             //m_Animator.SetTrigger(m_Attack13End);
-            m_Animator.Play("iceage-start");
-            print("iceage key was pressed");
+            m_Animator.Play("icedragon-4-start");
         }
         if (Input.GetKeyDown("c"))
         {
@@ -50,6 +49,18 @@ public class IceDragonController : MonoBehaviour {
             m_Animator.Play("ice-final-start");
             print("ice final key was pressed");
         }
+
+
+        //04-s
+        if (!flameDone && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("icedragon-4-end1"))
+        {
+            print("final cast");
+            iceFlame.SetActive(true);
+            iceFlame.GetComponent<FlameHidden>().startFlame();
+            flameDone = true;
+
+        }
+
 
         if (!flameDone && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("ice-final-end"))
         {
@@ -87,7 +98,7 @@ public class IceDragonController : MonoBehaviour {
 
         if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("iceage-start"))
         {
-            this.transform.position = new Vector3(this.transform.position.x,this.transform.position.y + Time.deltaTime * 2.0f, this.transform.position.z);
+            //this.transform.position = new Vector3(this.transform.position.x,this.transform.position.y + Time.deltaTime * 2.0f, this.transform.position.z);
 
         }
 
