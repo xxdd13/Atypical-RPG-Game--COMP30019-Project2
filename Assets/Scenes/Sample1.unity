@@ -41830,6 +41830,82 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 637130286}
   m_Mesh: {fileID: 4300000, guid: a42fa39ff5b9e3844baf051125102fb1, type: 2}
+--- !u!1 &638051034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 638051035}
+  - component: {fileID: 638051036}
+  - component: {fileID: 638051037}
+  - component: {fileID: 638051038}
+  m_Layer: 13
+  m_Name: BiteHurtBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &638051035
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 638051034}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 348347352}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &638051036
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 638051034}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 162.52, y: 536.5, z: 204.8}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &638051037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 638051034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05cf15f0f3c811d47b802c309648aed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  helpString: "\r\nRemember to have a collider set to trigger on this object or one
+    of its children!\r\nAlso Remember to place that object in a layer that collide
+    with what you want to damage \r\n(e.g. the Enemy layer does not collide with the
+    Player layer, so add it to a child in a different layer)\r\n"
+  amount: 10
+  damagedLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+--- !u!114 &638051038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 638051034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a57cbadd741d1344f8fd1770322521bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 5
+  dur: 2
+  attack: 0
 --- !u!1 &639506813
 GameObject:
   m_ObjectHideFlags: 0
@@ -43992,7 +44068,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1364292142}
   moveSpeed: 10
-  gdc: {fileID: 0}
+  angleTolerance: 20
+  distanceTolerance: 30
+  detectDistance: 20
+  stopDistance: 9
+  tooFarDistance: 100
+  attacking: 0
+  inRange0: 0
+  turning: 0
+  turnLeft: 0
+  turnRight: 0
+  movingFront: 0
+  angleDiff: 0
 --- !u!54 &689431996
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -68496,6 +68583,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1364292142}
   iceFlame: {fileID: 1015163008}
+  ttp: {fileID: 0}
+  biteHurtBox: {fileID: 638051034}
 --- !u!4 &1117006593 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400092, guid: 364c53f963d7b1e4a83baa168df20310, type: 3}
@@ -68524,14 +68613,37 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1117006589}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6113615ce0d66be49a7fcdbb7c041bb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1364292142}
-  moveSpeed: 10
-  gdc: {fileID: 0}
+  moveSpeed: 3
+  angleTolerance: 30
+  distanceTolerance: 20
+  detectDistance: 30
+  stopDistance: 7
+  tooFarDistance: 100
+  attacking: 0
+  inRange0: 0
+  turning: 0
+  turnLeft: 0
+  turnRight: 0
+  movingFront: 0
+  angleDiff: 0
+--- !u!114 &1117006596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1117006589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c67372ab5d23f408bb69f4bc7859de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 111.83
 --- !u!1 &1117153001
 GameObject:
   m_ObjectHideFlags: 0
@@ -93847,7 +93959,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400092, guid: 364c53f963d7b1e4a83baa168df20310, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 111.5
+      value: 111.74
       objectReference: {fileID: 0}
     - target: {fileID: 400092, guid: 364c53f963d7b1e4a83baa168df20310, type: 3}
       propertyPath: m_LocalPosition.z

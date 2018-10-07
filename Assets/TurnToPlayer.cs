@@ -5,22 +5,31 @@ using UnityEngine;
 public class TurnToPlayer : MonoBehaviour {
     public GameObject player;
     public float moveSpeed = 10f;
-    public GoldDragonController gdc;
 
-    readonly int m_Attack13End = Animator.StringToHash("Attack13End");
+
+    public float angleTolerance = 20.0f;
+    public float distanceTolerance = 30.0f;
+    public float detectDistance = 20.0f;
+    public float stopDistance = 9f;
+    public float tooFarDistance = 100f;
+
+    public bool attacking = false;
+    public bool inRange0 = false;
 
     protected Animator m_Animator;
     readonly int m_stand = Animator.StringToHash("stand");
     readonly int m_turnLeft = Animator.StringToHash("turnLeft");
     readonly int m_turnRight = Animator.StringToHash("turnRight");
     readonly int m_moveFront = Animator.StringToHash("MoveFront");
-    
 
 
-    protected bool turning = false;
-    protected bool turnLeft = false;
-    protected bool turnRight = false;
-    protected bool movingFront = false;
+
+    public bool turning = false;
+    public bool turnLeft = false;
+    public bool turnRight = false;
+    public bool movingFront = false;
+
+    public float angleDiff;
 
     private bool acti = false;
 
@@ -31,19 +40,29 @@ public class TurnToPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-       
+        if (attacking)
+            return;
+
         float distance = Vector3.Distance(player.transform.position, this.gameObject.transform.position);
         if (!acti)
         {
-            if (distance < 20f) {
+            if (distance < detectDistance)
+            {
                 acti = true;
-                gdc.enabled = true;
             }
             return;
         }
+        else if(distance >= tooFarDistance) {
+            acti = false;
+            return;
+        }
 
-        float angle = 20.0f;
+        float angle = angleTolerance;
+        
         float anglePlayer = Vector3.Angle(this.transform.forward, player.transform.position - this.transform.position);
+
+        angleDiff = anglePlayer;
+
         if (!movingFront&&anglePlayer > angle)
         {
             float angleLeft = Vector3.Angle(-this.transform.right, player.transform.position - this.transform.position);
@@ -121,24 +140,32 @@ public class TurnToPlayer : MonoBehaviour {
 
             if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Stand")) {
                 m_Animator.ResetTrigger(m_stand);
+
+                if (movingFront&& anglePlayer > angle) {
+                    movingFront = false;
+                }
             } else if(!movingFront)
             {
                 m_Animator.SetTrigger(m_stand);
             }
 
+
+
             //check for distance
    
             
-            if (distance > 35f) {
+            if (distance > distanceTolerance) {
                 m_Animator.SetTrigger(m_moveFront);
                 movingFront = true;
+                inRange0 = false;
             }
             //moving -> standing
-            if (distance < 5f)
+            if (distance < stopDistance)
             {
                 movingFront = false;
                 m_Animator.ResetTrigger(m_moveFront);
                 m_Animator.SetTrigger(m_stand);
+                inRange0 = true;
             }
 
             //moving forward
@@ -150,12 +177,15 @@ public class TurnToPlayer : MonoBehaviour {
             }
 
         }
-        if (distance < 9f&&movingFront)
+        if (distance < stopDistance && movingFront)
         {
             movingFront = false;
             m_Animator.ResetTrigger(m_moveFront);
             m_Animator.SetTrigger(m_stand);
+            inRange0 = true;
         }
+
+        
 
 
     }
@@ -164,6 +194,6 @@ public class TurnToPlayer : MonoBehaviour {
         Vector3 dir = player.transform.position - this.gameObject.transform.position;
         dir.y = 0;
         Quaternion rot = Quaternion.LookRotation(dir);
-        this.transform.rotation = Quaternion.Lerp(this.transform.rotation, rot, 2.0f * Time.deltaTime);
+        this.transform.rotation = Quaternion.Lerp(this.transform.rotation, rot, 3.0f * Time.deltaTime);
     }
 }
