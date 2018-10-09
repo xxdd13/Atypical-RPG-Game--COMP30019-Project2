@@ -31,7 +31,6 @@ namespace Proj2 {
                     Damageable enemy = col.GetComponent<Damageable>();
                     if (enemy != null)
                     {
-                        print(col.gameObject.name);
                         // linear falloff of effect
                         float proximity = (location - enemy.transform.position).magnitude;
                         float effect = 1 - (proximity / radius);

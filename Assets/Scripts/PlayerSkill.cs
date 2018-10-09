@@ -79,8 +79,10 @@ namespace Proj2
                     guidedTrigger = false;
                     currentProjectileNumber = 0;
                     //put gun away
-                    m_Animator.ResetTrigger(m_HashGunAuto);
+                    m_Animator = this.gameObject.GetComponent<PlayerController>().m_Animator;
+
                     m_Animator.SetTrigger(m_HashGunEnd);
+                    m_Animator.ResetTrigger(m_HashGunAuto);
 
                 }
             }

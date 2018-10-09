@@ -5,7 +5,7 @@ using UnityEngine;
 public class FlameHidden : MonoBehaviour {
     private ParticleSystem system;
     private ParticleSystem[] systems;
-
+    public GameObject hurtBox;
     // Use this for initialization
     void Start () {
         system = GetComponent<ParticleSystem>();
@@ -25,6 +25,7 @@ public class FlameHidden : MonoBehaviour {
         if (system == null || systems == null){ return; }
         system.Stop(true);
 
+        hurtBox.SetActive(false);
 
         for (byte i = 0; i < systems.Length; i++)
         {
@@ -37,6 +38,7 @@ public class FlameHidden : MonoBehaviour {
         system.Stop(false);
         system.Play(true);
 
+        hurtBox.SetActive(true);
 
         for (byte i = 0; i < systems.Length; i++)
         {

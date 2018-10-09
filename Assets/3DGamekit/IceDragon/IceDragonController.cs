@@ -13,6 +13,11 @@ public class IceDragonController : MonoBehaviour {
 
     //hurtboxes
     public GameObject biteHurtBox;
+    public GameObject stompHurtBox;
+    public GameObject landHurtBox;
+
+    //eff
+    public GameObject boom;
 
 
     readonly int m_Attack13End = Animator.StringToHash("Attack13End");
@@ -25,6 +30,12 @@ public class IceDragonController : MonoBehaviour {
     readonly int m_iceDouble = Animator.StringToHash("AttackDouble");
     private bool biteDone = false;
 
+    readonly int m_iceBreath = Animator.StringToHash("AttackIceBreath");
+    readonly int m_stompL = Animator.StringToHash("AttackStompL");
+
+    readonly int m_iceFly = Animator.StringToHash("AttackIceFly");
+    readonly int m_iceFlyEnd = Animator.StringToHash("AttackIceFlyEnd");
+
 
 
 
@@ -35,6 +46,9 @@ public class IceDragonController : MonoBehaviour {
     protected bool turnLeft = false;
     protected bool turnRight = false;
 
+    private bool doing = false;
+    private bool boomDone = false;
+
 
     // Use this for initialization
     void Start()
@@ -44,19 +58,41 @@ public class IceDragonController : MonoBehaviour {
 
     }
 
-    
 
+    
 
     // Update is called once per frame
     void Update()
     {
 
 
-        if (!ttp.turning &&!ttp.movingFront && ttp.inRange0) {
+        if (!ttp.turning &&!ttp.movingFront && ttp.inRange0 && !doing) {
 
             ttp.attacking = true;
-            if(ttp.attacking)
-                m_Animator.SetTrigger(m_iceDouble);
+            if (ttp.attacking) {
+                
+                int att = Random.Range(3, 4);
+
+                print(att);
+
+
+                if (att == 0)
+                {
+                    attack(m_iceDouble);
+                }
+                else if (att == 1) {
+                    attack(m_iceBreath);
+                }
+                else if (att == 2) {
+                    attack(m_stompL);
+                }
+                else if (att == 3)
+                {
+                    attack(m_iceFly);
+                }
+
+            }
+                
 
 
         }
@@ -74,19 +110,124 @@ public class IceDragonController : MonoBehaviour {
         {
             //m_Animator.SetTrigger(m_Attack13End);
             m_Animator.Play("ice-final-start");
-            print("ice final key was pressed");
+
         }
 
 
-        //04-s
-        if (!flameDone && animationState.IsName("icedragon-4-end1"))
+        if (animationState.IsName("ice-left-stomp"))
         {
-            print("final cast");
-            iceFlame.SetActive(true);
-            iceFlame.GetComponent<FlameHidden>().startFlame();
-            flameDone = true;
+
+
+            float stateTime = clip[0].clip.length * animationState.normalizedTime;
+            if (stateTime > 4.5f && stateTime < 5.5f)
+            {
+                HurtBox(stompHurtBox);
+
+                if (!boomDone) {
+                    boomDone = true;
+                    GameObject groundBoom = Instantiate(boom, stompHurtBox.transform.position, stompHurtBox.transform.localRotation) as GameObject;
+                }
+
+
+            }
+            else
+            {
+                HurtBoxDone(stompHurtBox);
+                boomDone = false;
+            }
+            ttp.facePlayer();
+        }
+        else if (animationState.IsName("ice-fly-start"))
+        {
+
+
+            float stateTime = clip[0].clip.length * animationState.normalizedTime;
+            if (stateTime > 5.5f)
+            {
+
+                this.gameObject.transform.position += this.gameObject.transform.up * Time.deltaTime * 5f;
+
+
+            }
+            else
+            {
+
+            }
+            ttp.facePlayer();
+        }
+        else if (animationState.IsName("ice-flip-breath"))
+        {
+
+
+            float stateTime = clip[0].clip.length * animationState.normalizedTime;
+            if (stateTime > 5.0f && stateTime < 10.0f)
+            {
+                fire();
+            }
+            else if (stateTime > 10.1f)
+            {
+                halt();
+            }
+            ttp.facePlayer();
+
+
+        } else if (animationState.IsName("ice-fly-loop")) {
+            ttp.facePlayer();
 
         }
+        else if (animationState.IsName("ice-land-a"))
+        {
+
+
+            float stateTime = clip[0].clip.length * animationState.normalizedTime;
+            if (stateTime > 6.0f && this.gameObject.transform.position.y>111.83f)
+            {
+                print(this.gameObject.transform.position.y);
+                this.gameObject.transform.position -= this.gameObject.transform.up * Time.deltaTime * 40f;
+
+
+            }
+            if (stateTime > 6.9f && stateTime < 7.5f)
+            {
+                if (!boomDone)
+                {
+                    boomDone = true;
+                    HurtBox(landHurtBox);
+                    Vector3 pos = landHurtBox.transform.position + (landHurtBox.transform.up * 4f) + (landHurtBox.transform.forward * 6f);
+                    GameObject groundBoom = Instantiate(boom, pos, landHurtBox.transform.localRotation) as GameObject;
+                    groundBoom.transform.localScale *= 2.5f;
+                }
+            }
+            else if (stateTime > 7.6f) {
+                HurtBoxDone(landHurtBox);
+                boomDone = false;
+            }
+            ttp.facePlayer();
+        }
+
+
+        //04-end1
+
+        if (animationState.IsName("icedragon-4-end1"))
+        {
+
+
+            float stateTime = clip[0].clip.length * animationState.normalizedTime;
+            if ( stateTime < 5.1f)
+            {
+                fire();
+            }
+            else
+            {
+                halt();
+            }
+            ttp.facePlayer();
+        }
+        else if (animationState.IsName("icedragon-4-start"))
+        {
+            ttp.facePlayer();
+        }
+
 
 
         if (!flameDone && animationState.IsName("ice-final-end"))
@@ -121,6 +262,7 @@ public class IceDragonController : MonoBehaviour {
             fh.stopFlame();
             flameDone = false;
             ttp.attacking = false;
+            this.doing = false;
 
         }
 
@@ -143,7 +285,6 @@ public class IceDragonController : MonoBehaviour {
             else
             {
                 
-
                 biteHurtBox.SetActive(false);
             }
         }
@@ -151,4 +292,35 @@ public class IceDragonController : MonoBehaviour {
 
 
     }
+    public void fire() {
+        iceFlame.SetActive(true);
+        iceFlame.GetComponent<FlameHidden>().startFlame();
+    }
+    public void halt()
+    {
+        FlameHidden fh = iceFlame.GetComponent<FlameHidden>();
+        fh.stopFlame();
+        
+    }
+
+    public void attack(int trigger)
+    {
+        foreach (AnimatorControllerParameter p in m_Animator.parameters)
+        {
+            m_Animator.ResetTrigger(p.name);
+        }
+        m_Animator.SetTrigger(trigger);
+        this.doing = true;
+        ttp.attacking = true;
+    }
+
+    public void HurtBox(GameObject obj) {
+        obj.SetActive(true);
+    }
+
+    public void HurtBoxDone(GameObject obj)
+    {
+        obj.SetActive(false);
+    }
+
 }
