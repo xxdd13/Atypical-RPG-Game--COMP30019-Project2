@@ -95,9 +95,9 @@ Material:
     - _Rimtiling: 0.79
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 100
+    - _Speed: -22.9
     - _SrcBlend: 1
-    - _Strength: 1
+    - _Strength: 0.571
     - _SurfaceHighlight: 0.101
     - _SurfaceHightlighttiling: 0.25
     - _Surfacehightlightsize: 0

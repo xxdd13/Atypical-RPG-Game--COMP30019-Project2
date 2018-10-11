@@ -68,7 +68,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FoamTexture:
-        m_Texture: {fileID: 2800000, guid: 4569f84b7d2064c48ad37bc2748ca835, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -198,7 +198,7 @@ Material:
     - _FoamSpeed: 2.2
     - _Fresnel: 0
     - _FresnelSaturation: 1
-    - _Gloss: 0.534
+    - _Gloss: 0.468
     - _Glossiness: 0.5
     - _InverseDirection: 1
     - _InverseWaves: 1
@@ -218,10 +218,10 @@ Material:
     - _RadialWaves: 1
     - _ReflectionDistortion: 0
     - _ReflectionFresnel: 4
-    - _ReflectionIntensity: 0.769
+    - _ReflectionIntensity: 0.202
     - _RefractionAmount: 0.579
     - _RefractionDistortion: 0
-    - _RefractionIntensity: 0.41
+    - _RefractionIntensity: 0.395
     - _RefractionPower: 0
     - _ScaleFade: 0.11
     - _ShoreBlend: 0.15
@@ -257,7 +257,7 @@ Material:
     - _WavesFoam: 0.1
     - _WavesFresnel: 0.685
     - _WavesIntensity: 0.5
-    - _WavesScale: 0.115
+    - _WavesScale: 0.577
     - _WavesSpeed: 0.644
     - _ZWrite: 1
     - _foamIntensity: 1
@@ -266,6 +266,6 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DeepColor: {r: 0, g: 0.18382353, b: 0.17621718, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ReflectionColor: {r: 0.6836073, g: 0.7968859, b: 0.85294116, a: 1}
+    - _ReflectionColor: {r: 0.28773582, g: 0.7571827, b: 1, a: 1}
     - _ShallowColor: {r: 0, g: 0.47932065, b: 0.5000113, a: 0.478}
-    - _WaterColor: {r: 0, g: 0.4601992, b: 0.55147594, a: 1}
+    - _WaterColor: {r: 0.03404235, g: 0.67288893, b: 0.8018868, a: 1}

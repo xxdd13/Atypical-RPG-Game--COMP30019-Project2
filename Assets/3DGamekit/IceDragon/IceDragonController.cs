@@ -94,7 +94,7 @@ namespace Proj2
                 if (ttp.attacking)
                 {
 
-                    int att = Random.Range(3, 4);
+                    int att = Random.Range(0, 4);
 
                     print(att);
 
