@@ -45,6 +45,7 @@ public class TurnToPlayer : MonoBehaviour {
             return;
 
         float distance = Vector3.Distance(player.transform.position, this.gameObject.transform.position);
+
         targetDistance = distance;
         if (!acti)
         {
@@ -79,7 +80,7 @@ public class TurnToPlayer : MonoBehaviour {
 
             if (angleLeft < angleRight)
             {
-
+                
                 m_Animator.ResetTrigger(m_turnRight);
                 m_Animator.SetTrigger(m_turnLeft);
                 
@@ -101,7 +102,6 @@ public class TurnToPlayer : MonoBehaviour {
             }
             else
             {
-
 
                 turnRight = true;
                 turnLeft = false;
@@ -142,6 +142,7 @@ public class TurnToPlayer : MonoBehaviour {
 
             if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Stand")) {
                 m_Animator.ResetTrigger(m_stand);
+                facePlayerSlow();
 
                 if (movingFront&& anglePlayer > angle) {
                     movingFront = false;
@@ -175,7 +176,7 @@ public class TurnToPlayer : MonoBehaviour {
             {
                 turning = turnLeft = turnRight = false;
                 transform.position = transform.position + transform.forward * moveSpeed * Time.deltaTime;
-                facePlayer();
+                facePlayerFast();
             }
 
         }
@@ -187,8 +188,8 @@ public class TurnToPlayer : MonoBehaviour {
             inRange0 = true;
         }
 
-        
 
+        
 
     }
 
@@ -197,5 +198,19 @@ public class TurnToPlayer : MonoBehaviour {
         dir.y = 0;
         Quaternion rot = Quaternion.LookRotation(dir);
         this.transform.rotation = Quaternion.Lerp(this.transform.rotation, rot, 3.0f * Time.deltaTime);
+    }
+    public void facePlayerFast()
+    {
+        Vector3 dir = player.transform.position - this.gameObject.transform.position;
+        dir.y = 0;
+        Quaternion rot = Quaternion.LookRotation(dir);
+        this.transform.rotation = Quaternion.Lerp(this.transform.rotation, rot, 6.0f * Time.deltaTime);
+    }
+    public void facePlayerSlow()
+    {
+        Vector3 dir = player.transform.position - this.gameObject.transform.position;
+        dir.y = 0;
+        Quaternion rot = Quaternion.LookRotation(dir);
+        this.transform.rotation = Quaternion.Lerp(this.transform.rotation, rot, 1.0f * Time.deltaTime);
     }
 }

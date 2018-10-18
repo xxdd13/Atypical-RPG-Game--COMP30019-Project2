@@ -72,9 +72,10 @@ GameObject:
   - component: {fileID: 4705561969071978}
   - component: {fileID: 120353842312387500}
   - component: {fileID: 114446967331766982}
-  - component: {fileID: 114546859649599704}
+  - component: {fileID: 114940893708903612}
   - component: {fileID: 114210759373430790}
   - component: {fileID: 136306529502479942}
+  - component: {fileID: 114979014583290738}
   m_Layer: 0
   m_Name: lightning_gun_beam
   m_TagString: Untagged
@@ -400,10 +401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05cf15f0f3c811d47b802c309648aed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helpString: "\r\nRemember to have a collider set to trigger on this object or one
-    of its children!\r\nAlso Remember to place that object in a layer that collide
-    with what you want to damage \r\n(e.g. the Enemy layer does not collide with the
-    Player layer, so add it to a child in a different layer)\r\n"
   amount: 1
   damagedLayers:
     serializedVersion: 2
@@ -435,17 +432,6 @@ MonoBehaviour:
   OscillateTime: 0.05
   rayImpact: {fileID: 4672210478070056}
   rayMuzzle: {fileID: 4078127168967878}
---- !u!114 &114546859649599704
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1381510829044276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ee88aca8da0c6745bb611916e5dd0dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114677732864500690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -481,6 +467,37 @@ MonoBehaviour:
   OscillateTime: 0.05
   rayImpact: {fileID: 0}
   rayMuzzle: {fileID: 0}
+--- !u!114 &114940893708903612
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1381510829044276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095111f5199fed94c9b8a2e5cc5aae9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114979014583290738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1381510829044276}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60721108c799e94cbf1e64c477510a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textures:
+  - {fileID: 2800000, guid: 87f9211f2af788e40ab7ae7ce212295d, type: 3}
+  - {fileID: 2800000, guid: c8375f4e373002c439a64d208c655000, type: 3}
+  - {fileID: 2800000, guid: 4bcc69cb6bb18a442bd00bafd91d703a, type: 3}
+  - {fileID: 2800000, guid: 4cbf5e57e87eeb84cb06c9b9f75a09c3, type: 3}
+  - {fileID: 2800000, guid: 87fdf10b7c5d57b42835707c217df981, type: 3}
+  - {fileID: 2800000, guid: b70c992b9787e004d9bcd7004d04b34a, type: 3}
+  increasing: 0
+  delay: 0.1
 --- !u!120 &120018702573080374
 LineRenderer:
   m_ObjectHideFlags: 1
