@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Cliff_C_Mat
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 2ae82401fc34f431bad9b774c2942292, type: 3}
   m_ShaderKeywords: _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -59,7 +59,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: a0e9a23a3c69a2d4da534663b350e533, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1a879096dca909e469b114f433374335, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -105,6 +105,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _Detailstrength: 0.28
+    - _DiffuseThreshold: 0.1
     - _DstBlend: 0
     - _Float4: 0.13
     - _Globaltiling: 0.136
@@ -115,8 +116,10 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OutlineThickness: 0.25
     - _Parallax: 0.02
     - _Roughness: 0.251
+    - _Shininess: 0.5
     - _SmoothnessTextureChannel: 0
     - _SnowCover: 1
     - _SnowTiling: 7
@@ -126,7 +129,9 @@ Material:
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _Color: {r: 0.6415094, g: 0.6227614, b: 0.58401567, a: 1}
+    - _Color: {r: 0.4056604, g: 0.27044025, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GlobalColor: {r: 0.5882353, g: 0.5294118, b: 0.40784317, a: 1}
     - _ObjectColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularColor: {r: 0.8784314, g: 0.2882614, b: 0.0039215535, a: 1}
+    - _UnlitColor: {r: 0.3018868, g: 0.16849494, b: 0, a: 1}
