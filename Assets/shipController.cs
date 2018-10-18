@@ -30,17 +30,24 @@ public class shipController : MonoBehaviour {
     Boolean moveToHome = false;
     Boolean isPlayerOnBoard = false;
 
+    public Transform battleGround;
+
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         startPos = transform.position;
         startRotation = transform.rotation;
         currentTargetPos = target_home_1.position;
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+        transform.RotateAround(battleGround.position, Vector3.up, speed * Time.deltaTime);
+
+
+        /*
         float step = speed * Time.deltaTime;
 
         if (Input.GetKeyDown("o")) {
@@ -61,14 +68,17 @@ public class shipController : MonoBehaviour {
             moveShipFromDestToHome(step);
         }
 
-	}
+        */
+
+
+    }
 
 
 
 
     private void OnTriggerStay(Collider other) {
 
-        if(other.gameObject.CompareTag("Player")){
+        if (other.gameObject.CompareTag("Player")) {
             isPlayerOnBoard = true;
             Debug.Log("PLAYER ON BOARD");
         }
@@ -77,18 +87,18 @@ public class shipController : MonoBehaviour {
 
 
 
-    void moveShipFromDestToHome(float step){
-        
+    void moveShipFromDestToHome(float step) {
+
         moveToPos(currentTargetPos, step);
         Debug.Log("MOVING BACK HOME");
 
 
-        if (transform.position == target_buffer.position){
+        if (transform.position == target_buffer.position) {
             currentTargetPos = startPos;
         }
 
 
-        if(currentTargetPos == startPos){
+        if (currentTargetPos == startPos) {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, startRotation, step);
 
         }
@@ -100,7 +110,7 @@ public class shipController : MonoBehaviour {
             arriveAtHome();
 
         }
-        
+
     }
 
     void arriveAtHome() {
@@ -109,22 +119,22 @@ public class shipController : MonoBehaviour {
 
     }
 
-    void arriveAtDest(){
+    void arriveAtDest() {
         moveToDest = false;
         moveToHome = false;
-        
+
     }
 
-    void moveShipFromHomeToDest(float step){
+    void moveShipFromHomeToDest(float step) {
 
         if (isTurning) {
             rotateCurrentObject(step);
         }
 
-     
+
         moveToPos(currentTargetPos, step);
-        
-        if(transform.position == target_home_1.position){
+
+        if (transform.position == target_home_1.position) {
             currentTargetPos = target_home_2.position;
             isTurning = true;
 
@@ -136,7 +146,7 @@ public class shipController : MonoBehaviour {
 
         }
 
-        if(transform.position == target_home_3.position) {
+        if (transform.position == target_home_3.position) {
             currentTargetPos = target_dest_1.position;
             isTurning = false;
 
@@ -171,24 +181,24 @@ public class shipController : MonoBehaviour {
         transform.Rotate(0, (step * offset), 0);
     }
 
-    void moveToPos(Vector3 position, float step){
-        
-        if(currentTargetPos == target_home_1.position){
+    void moveToPos(Vector3 position, float step) {
+
+        if (currentTargetPos == target_home_1.position) {
             Debug.Log("MOVE TO TARGET HOME 1");
-            
-        }else if (currentTargetPos == target_home_2.position){
+
+        } else if (currentTargetPos == target_home_2.position) {
             Debug.Log("MOVE TO TARGET HOME 2");
-            
-        }else if(currentTargetPos == target_home_3.position){
+
+        } else if (currentTargetPos == target_home_3.position) {
             Debug.Log("MOVE TO TARGET HOME 3");
 
-        }else if (currentTargetPos == target_dest_1.position) {
+        } else if (currentTargetPos == target_dest_1.position) {
             Debug.Log("MOVE TO TARGET DEST 1");
 
-        }else if (currentTargetPos == target_dest_3.position) {
+        } else if (currentTargetPos == target_dest_3.position) {
             Debug.Log("MOVE TO TARGET DEST 2");
 
-        }else if (currentTargetPos == target_dest_3.position) {
+        } else if (currentTargetPos == target_dest_3.position) {
             Debug.Log("MOVE TO TARGET DEST 3");
 
         }
