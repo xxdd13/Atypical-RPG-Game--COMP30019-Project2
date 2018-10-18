@@ -9,6 +9,7 @@ public class TextureAnimateLoop : MonoBehaviour
     private int index;
     public Texture[] textures;
     public bool increasing;
+    public float delay = 0.1f;
     // Use this for initialization
     void Start()
     {
@@ -23,7 +24,7 @@ public class TextureAnimateLoop : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 0.1f)
+        if (timer > delay)
         {
             timer = 0f;
             renderer.material.mainTexture = textures[index];
@@ -43,7 +44,6 @@ public class TextureAnimateLoop : MonoBehaviour
             {
                 index -= 1;
             }
-            print(index);
 
         }
     }

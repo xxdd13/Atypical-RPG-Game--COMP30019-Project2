@@ -55,7 +55,7 @@ namespace Proj2
                 }
             }
 
-            if (!ttp.turning && !ttp.movingFront && ttp.inRange0 && !doing)
+            if (!ttp.turning && !ttp.movingFront && ttp.targetDistance<10f && !doing)
             {
 
                 ttp.attacking = true;

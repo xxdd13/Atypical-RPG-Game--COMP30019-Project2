@@ -13,7 +13,7 @@ namespace Proj2
 
         private Rigidbody rb;
 
-        
+        public Transform respawnPos;
 
         /// xxxxxxxxxxxxxx
         protected static PlayerController s_Instance;
@@ -686,18 +686,10 @@ namespace Proj2
                 yield return null;
             }
             
-            // Wait for the screen to fade out.
-            //yield return StartCoroutine(ScreenFader.FadeSceneOut());
-           // while (ScreenFader.IsFading)
-            //{
-               // yield return null;
-           // }
-
-            // Enable spawning.
-            EllenSpawn spawn = GetComponentInChildren<EllenSpawn>();
-            spawn.enabled = true;
-
             
+
+            //teleport to spawn pos
+            this.transform.position = respawnPos.position+ respawnPos.up*3f+ respawnPos.forward*3f;
 
             // Get Ellen's health back.
             m_Damageable.ResetDamage();
@@ -705,11 +697,7 @@ namespace Proj2
             // Set the Respawn parameter of the animator.
             m_Animator.SetTrigger(m_HashRespawn);
             
-            // Start the respawn graphic effects.
-            spawn.StartEffect();
             
-            // Wait for the screen to fade in.
-            // Currently it is not important to yield here but should some changes occur that require waiting until a respawn has finished this will be required.
             
         }
 

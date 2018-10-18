@@ -13,6 +13,7 @@ namespace Proj2
         public GameObject bossUI;
         public Text canvasBossText;
         public string bossName;
+        public float distance = 30f;
 
         // Use this for initialization
         void Start()
@@ -29,7 +30,7 @@ namespace Proj2
             if (damageable != null)
             {
                 //player is close to this boss
-                if (Vector3.Distance(player.transform.position, this.transform.position) < 15f)
+                if (Vector3.Distance(player.transform.position, this.transform.position) < distance)
                 {
                     this.bossUI.SetActive(true);
                     damageable.healthSlider = this.healthSlider;

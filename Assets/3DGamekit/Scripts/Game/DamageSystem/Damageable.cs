@@ -23,9 +23,9 @@ namespace Proj2
         public float hitForwardRotation = 360.0f;
 
         public bool isInvulnerable { get; set; }
-        public int currentHitPoints { get; private set; }
+        public int currentHitPoints;
 
-        public UnityEvent OnDeath, OnReceiveDamage, OnHitWhileInvulnerable, OnBecomeVulnerable, OnResetDamage;
+        public UnityEvent OnDeath, OnHit, OnReset;
 
         
         public List<MonoBehaviour> onDamageMessageReceivers;
@@ -50,7 +50,6 @@ namespace Proj2
                 {
                     m_timeSinceLastHit = 0.0f;
                     isInvulnerable = false;
-                    OnBecomeVulnerable.Invoke();
                 }
             }
         }
@@ -60,7 +59,7 @@ namespace Proj2
             currentHitPoints = maxHitPoints;
             isInvulnerable = false;
             m_timeSinceLastHit = 0.0f;
-            OnResetDamage.Invoke();
+            OnReset.Invoke();
         }
 
         public void SetColliderState(bool enabled)
@@ -77,7 +76,6 @@ namespace Proj2
 
             if (isInvulnerable)
             {
-                OnHitWhileInvulnerable.Invoke();
                 return;
             }
 
@@ -89,7 +87,7 @@ namespace Proj2
             if (currentHitPoints <= 0)
                 schedule += OnDeath.Invoke; //This avoid race condition when objects kill each other.
             else
-                OnReceiveDamage.Invoke();
+                OnHit.Invoke();
 
             var messageType = currentHitPoints <= 0 ? MessageType.DEAD : MessageType.DAMAGED;
 

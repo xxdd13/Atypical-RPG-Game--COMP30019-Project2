@@ -12,7 +12,7 @@ namespace Proj2
         public GameObject iceFlame;
         public TurnToPlayer ttp;
         private bool flameDone = false;
-
+        public GameObject gate;
 
         //hurtboxes
         public GameObject biteHurtBox;
@@ -80,7 +80,7 @@ namespace Proj2
                     return;
                 }
                 else {
-
+                    gate.GetComponent<GateController>().enabled = true ;
                     
                     return;
                 }

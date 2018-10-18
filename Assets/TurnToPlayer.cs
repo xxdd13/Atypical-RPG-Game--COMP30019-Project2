@@ -15,6 +15,7 @@ public class TurnToPlayer : MonoBehaviour {
 
     public bool attacking = false;
     public bool inRange0 = false;
+    public float targetDistance = 0.0f;
 
     protected Animator m_Animator;
     readonly int m_stand = Animator.StringToHash("stand");
@@ -44,6 +45,7 @@ public class TurnToPlayer : MonoBehaviour {
             return;
 
         float distance = Vector3.Distance(player.transform.position, this.gameObject.transform.position);
+        targetDistance = distance;
         if (!acti)
         {
             if (distance < detectDistance)
