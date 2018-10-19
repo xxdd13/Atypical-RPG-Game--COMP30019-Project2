@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCoolDown : MonoBehaviour {
     public float rbCoolDown = 1.5f;
@@ -24,6 +25,13 @@ public class PlayerCoolDown : MonoBehaviour {
     public float ballistaCD;
     public float crossCD;
 
+    public Slider rbUI;
+    public Slider nukeUI;
+    public Slider gSpellUI;
+    public Slider iceUI;
+    public Slider ballistaUI;
+
+
 
     // Use this for initialization
     void Start () {
@@ -34,23 +42,27 @@ public class PlayerCoolDown : MonoBehaviour {
     void Update () {
         if (!rb) {
             rbCD += Time.deltaTime;
-            print(rbCD);
+            rbUI.value = rbCD/ rbCoolDown;
         }
         if (!nuke)
         {
             nukeCD += Time.deltaTime;
+            nukeUI.value = nukeCD / nukeCoolDown;
         }
         if (!guidedSpell)
         {
             guidedSpellCD += Time.deltaTime;
+            gSpellUI.value = guidedSpellCD / guidedSpellCoolDown;
         }
         if (!iceSword)
         {
             iceSwordCD += Time.deltaTime;
+            iceUI.value = iceSwordCD / IceSwordCoolDown;
         }
         if (!ballista)
         {
             ballistaCD += Time.deltaTime;
+            ballistaUI.value = ballistaCD / BallistaCoolDown;
         }
         if (!cross)
         {

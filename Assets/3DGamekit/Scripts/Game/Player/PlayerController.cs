@@ -16,22 +16,22 @@ namespace Proj2
         public Transform respawnPos;
 
         /// xxxxxxxxxxxxxx
-        protected static PlayerController s_Instance;
-        public static PlayerController instance { get { return s_Instance; } }
+        protected static PlayerController pc;
+        public static PlayerController instance { get { return pc; } }
 
         public bool respawning { get { return m_Respawning; } }
 
-        public float maxForwardSpeed = 20f;        // How fast Ellen can run.
-        public float gravity = 20f;               // How fast Ellen accelerates downwards when airborne.
-        public float jumpSpeed = 10f;             // How fast Ellen takes off when jumping.
-        public float minTurnSpeed = 400f;         // How fast Ellen turns when moving at maximum speed.
-        public float maxTurnSpeed = 1200f;        // How fast Ellen turns when stationary.
-        public float idleTimeout = 5f;            // How long before Ellen starts considering random idles.
-        public bool canAttack;                    // Whether or not Ellen can swing her staff.
+        public float maxForwardSpeed = 20f;        
+        public float gravity = 20f;              
+        public float jumpSpeed = 10f;            
+        public float minTurnSpeed = 400f;         
+        public float maxTurnSpeed = 1200f;       
+        public float idleTimeout = 5f;            
+        public bool canAttack;                    
 
-        public CameraSettings cameraSettings;            // Reference used to determine the camera's direction.
-        public MeleeWeapon meleeWeapon;                  // Reference used to (de)activate the staff when attacking. 
-        public RandomAudioPlayer footstepPlayer;         // Random Audio Players used for various situations.
+        public CameraSettings cameraSettings;            
+        public MeleeWeapon meleeWeapon;                  
+        public RandomAudioPlayer footstepPlayer;         
         public RandomAudioPlayer hurtAudioPlayer;
         public RandomAudioPlayer landingPlayer;
         public RandomAudioPlayer emoteLandingPlayer;
@@ -39,35 +39,32 @@ namespace Proj2
         public RandomAudioPlayer emoteAttackPlayer;
         public RandomAudioPlayer emoteJumpPlayer;
 
-        protected AnimatorStateInfo m_CurrentStateInfo;    // Information about the base layer of the animator cached.
+        protected AnimatorStateInfo ani_cur_state;   
         protected AnimatorStateInfo m_NextStateInfo;
         protected bool m_IsAnimatorTransitioning;
-        protected AnimatorStateInfo m_PreviousCurrentStateInfo;    // Information about the base layer of the animator from last frame.
+        protected AnimatorStateInfo m_PreviousCurrentStateInfo;    
         protected AnimatorStateInfo m_PreviousNextStateInfo;
         protected bool m_PreviousIsAnimatorTransitioning;
-        protected bool m_IsGrounded = true;            // Whether or not Ellen is currently standing on the ground.
-        protected bool m_PreviouslyGrounded = true;    // Whether or not Ellen was standing on the ground last frame.
-        protected bool m_ReadyToJump;                  // Whether or not the input state and Ellen are correct to allow jumping.
-        protected float m_DesiredForwardSpeed;         // How fast Ellen aims be going along the ground based on input.
-        protected float m_ForwardSpeed;                // How fast Ellen is currently going along the ground.
-        protected float m_VerticalSpeed;               // How fast Ellen is currently moving up or down.
-        protected PlayerInput m_Input;                 // Reference used to determine how Ellen should move.
-        protected CharacterController m_CharCtrl;      // Reference used to actually move Ellen.
-        public Animator m_Animator;                 // Reference used to make decisions based on Ellen's current animation and to set parameters.
-        protected Material m_CurrentWalkingSurface;    // Reference used to make decisions about audio.
-        protected Quaternion m_TargetRotation;         // What rotation Ellen is aiming to have based on input.
-        protected float m_AngleDiff;                   // Angle in degrees between Ellen's current rotation and her target rotation.
-        protected Collider[] m_OverlapResult = new Collider[8];    // Used to cache colliders that are near Ellen.
-        protected bool m_InAttack;                     // Whether Ellen is currently in the middle of a melee attack.
-        protected bool m_InCombo;                      // Whether Ellen is currently in the middle of her melee combo.
-        protected Damageable m_Damageable;             // Reference used to set invulnerablity and health based on respawning.
-        protected Renderer[] m_Renderers;              // References used to make sure Renderers are reset properly. 
-        
-        protected bool m_Respawning;                   // Whether Ellen is currently respawning.
-        protected float m_IdleTimer;                   // Used to count up to Ellen considering a random idle.
+        protected bool onGround = true;            
+        protected bool m_PreviouslyGrounded = true;   
+        protected bool m_ReadyToJump;                  
+        protected float m_DesiredForwardSpeed;         
+        protected float m_ForwardSpeed;               
+        protected float m_VerticalSpeed;              
+        protected PlayerInput m_Input;                 
+        protected CharacterController m_CharCtrl;    
+        public Animator m_Animator;                
+        protected Material m_CurrentWalkingSurface;    
+        protected Quaternion m_TargetRotation;         
+        protected float m_AngleDiff;                   
+        //protected Collider[] m_OverlapResult = new Collider[8];    
+        protected bool m_InAttack;                    
+        protected bool m_InCombo;                      
+        protected Damageable m_Damageable;             
+        protected bool m_Respawning;                   
+        protected float m_IdleTimer;                  
 
-        // These constants are used to ensure Ellen moves and behaves properly.
-        // It is advised you don't change them without fully understanding what they do in code.
+
         const float k_AirborneTurnSpeedProportion = 5.4f;
         const float k_GroundedRayDistance = 1f;
         const float k_JumpAbortSpeed = 10f;
@@ -95,26 +92,26 @@ namespace Proj2
         protected int TriggerParamCross = Animator.StringToHash("cross");
 
 
-        readonly int m_HashHurt = Animator.StringToHash("Hurt");
-        readonly int m_HashDeath = Animator.StringToHash("Death");
-        readonly int m_HashRespawn = Animator.StringToHash("Respawn");
-        readonly int m_HashHurtFromX = Animator.StringToHash("HurtFromX");
-        readonly int m_HashHurtFromY = Animator.StringToHash("HurtFromY");
-        readonly int m_HashStateTime = Animator.StringToHash("StateTime");
-        readonly int m_HashFootFall = Animator.StringToHash("FootFall");
+        readonly int ani_ParamHurt = Animator.StringToHash("Hurt");
+        readonly int ani_ParamDeath = Animator.StringToHash("Death");
+        readonly int ani_ParamRespawn = Animator.StringToHash("Respawn");
+        readonly int ani_ParamHurtFromX = Animator.StringToHash("HurtFromX");
+        readonly int ani_ParamHurtFromY = Animator.StringToHash("HurtFromY");
+        readonly int ani_ParamStateTime = Animator.StringToHash("StateTime");
+        readonly int ani_ParamFootFall = Animator.StringToHash("FootFall");
 
         // States
-        readonly int m_HashLocomotion = Animator.StringToHash("Locomotion");
-        readonly int m_HashAirborne = Animator.StringToHash("Airborne");
-        readonly int m_HashLanding = Animator.StringToHash("Landing");    // Also a parameter.
-        readonly int m_HashEllenCombo1 = Animator.StringToHash("EllenCombo1");
-        readonly int m_HashEllenCombo2 = Animator.StringToHash("EllenCombo2");
-        readonly int m_HashEllenCombo3 = Animator.StringToHash("EllenCombo3");
-        readonly int m_HashEllenCombo4 = Animator.StringToHash("EllenCombo4");
-        readonly int m_HashEllenDeath = Animator.StringToHash("EllenDeath");
+        readonly int ani_ParamLocomotion = Animator.StringToHash("Locomotion");
+        readonly int ani_ParamAirborne = Animator.StringToHash("Airborne");
+        readonly int ani_ParamLanding = Animator.StringToHash("Landing");    // Also a parameter.
+        readonly int ani_ParamEllenCombo1 = Animator.StringToHash("EllenCombo1");
+        readonly int ani_ParamEllenCombo2 = Animator.StringToHash("EllenCombo2");
+        readonly int ani_ParamEllenCombo3 = Animator.StringToHash("EllenCombo3");
+        readonly int ani_ParamEllenCombo4 = Animator.StringToHash("EllenCombo4");
+        readonly int ani_ParamEllenDeath = Animator.StringToHash("EllenDeath");
 
         // Tags
-        readonly int m_HashBlockInput = Animator.StringToHash("BlockInput");
+        readonly int ani_ParamBlockInput = Animator.StringToHash("BlockInput");
 
 
         private PlayerCoolDown cd;
@@ -168,49 +165,30 @@ namespace Proj2
             m_Animator = GetComponent<Animator>();
             m_CharCtrl = GetComponent<CharacterController>();
             rb = GetComponent<Rigidbody>();
-
-            /////xxxxxxxxxxxxxxxxx
             cd = GetComponent<PlayerCoolDown>();
             m_skill = GetComponent<PlayerSkill>();
 
             meleeWeapon.SetOwner(gameObject);
 
-            s_Instance = this;
+            pc = this;
 
             Cursor.lockState = CursorLockMode.None;
-
-            // This locks the cursor
             Cursor.lockState = CursorLockMode.Locked;
 
         }
 
-        // Called automatically by Unity after Awake whenever the script is enabled. 
+        
         void OnEnable()
-        {
-            //SceneLinkedSMB<PlayerController>.Initialise(m_Animator, this);
-
+        {        
             m_Damageable = GetComponent<Damageable>();
             m_Damageable.onDamageMessageReceivers.Add(this);
-
             m_Damageable.isInvulnerable = true;
-
-            EquipMeleeWeapon(false);
-
-            m_Renderers = GetComponentsInChildren<Renderer>();
         }
 
-        // Called automatically by Unity whenever the script is disabled.
-        void OnDisable()
-        {
-            m_Damageable.onDamageMessageReceivers.Remove(this);
 
-            for (int i = 0; i < m_Renderers.Length; ++i)
-            {
-                m_Renderers[i].enabled = true;
-            }
-        }
+        void OnDisable(){}
 
-        // Called automatically by Unity once every Physics step.
+
         void FixedUpdate()
         {
             CacheAnimatorState();
@@ -219,7 +197,7 @@ namespace Proj2
 
             EquipMeleeWeapon(IsWeaponEquiped());
 
-            m_Animator.SetFloat(m_HashStateTime, Mathf.Repeat(m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
+            m_Animator.SetFloat(ani_ParamStateTime, Mathf.Repeat(m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
             m_Animator.ResetTrigger(TriggerParamMelee);
 
             m_Animator.ResetTrigger(TriggerParamRB);
@@ -230,7 +208,7 @@ namespace Proj2
             if (m_Input.RButton && canAttack) {
                 if (cd.rb)
                 {
-                    UpdateOrientation();
+                    ChangeOrientation();
                     m_Animator.SetTrigger(TriggerParamRB);         
                 }
                     
@@ -240,7 +218,7 @@ namespace Proj2
             //nukkkkkkkkkkkke
             if (m_Input.NukeButton && canAttack && cd.nuke)
             {
-                UpdateOrientation();
+                ChangeOrientation();
                 m_Animator.SetTrigger(TriggerParamNuke);
             }
 
@@ -248,7 +226,7 @@ namespace Proj2
             //guided spell
             if (m_Input.GuidedSpell && canAttack && cd.guidedSpell)
             {
-                UpdateOrientation();
+                ChangeOrientation();
                 m_Animator.SetTrigger(TriggerParamGunAuto);
             }
 
@@ -256,64 +234,74 @@ namespace Proj2
             //iceSword
             if(m_Input.IceSword && canAttack && cd.iceSword)
             {
-                UpdateOrientation();
+                ChangeOrientation();
                 m_Animator.SetTrigger(TriggerParamIceSword);
             }
 
             //ballista
             if (m_Input.Ballista && canAttack && cd.ballista)
             {
-                UpdateOrientation();
+                ChangeOrientation();
                 m_Animator.SetTrigger(TriggerParamBallista);
             }
 
             //cross
             if (m_Input.Cross && canAttack && cd.cross)
             {
-                UpdateOrientation();
+                ChangeOrientation();
                 m_Animator.SetTrigger(TriggerParamCross);
             }
 
 
             if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("RButtonAttack") && cd.rb)
             {
+
                 cd.rbCast();
                 m_skill.rb();
-            }else if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Nuke") && cd.nuke)
+                emoteAttackPlayer.PlayRandomClip();
+            }
+            else if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Nuke") && cd.nuke)
             {
                 cd.nukeCast();
                 m_skill.nuke();
+                emoteAttackPlayer.PlayRandomClip();
             }
             else if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("EllenGunShoot") && cd.guidedSpell)
             {
                 cd.guidedSpellCast();
                 m_skill.guidedTrigger = true;
+                emoteAttackPlayer.PlayRandomClip();
             }
             else if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("IceSword") && cd.iceSword)
             {
                 cd.iceSwordCast();
                 m_skill.iceSwordTrigger = true;
+                emoteAttackPlayer.PlayRandomClip();
             }
             else if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Ballista") && cd.ballista)
             {
                 cd.ballistaCast();
                 m_skill.ballista();
+                emoteAttackPlayer.PlayRandomClip();
 
             }
             else if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("cross-exec") && cd.cross)
             {
                 cd.crossCast();
                 m_skill.cross();
+                emoteAttackPlayer.PlayRandomClip();
 
             }
+            
 
 
             //blink skills
+            /**
             if (Input.GetKeyUp(KeyCode.LeftShift) ) {
                 RaycastHit hit;
                 Vector3 forwardPos = transform.position + transform.forward;
                 m_skill.teleport();
-                /**
+                
                 Physics.Raycast(forwardPos, transform.forward, out hit, 12f);
                     if (hit.collider != null) //need to stop right before collision
                     {
@@ -327,21 +315,21 @@ namespace Proj2
                     }
 
                 
-                **/
+                
 
-                /**
-                rb.AddForce(transform.forward * 100f, ForceMode.Impulse);
+            /**
+            rb.AddForce(transform.forward * 100f, ForceMode.Impulse);
 
-                //teleport force added
-                teleported = true;
-                tpFrame = 30;
+            //teleport force added
+            teleported = true;
+            tpFrame = 30;
 
-                **/
-
-
+            
 
 
-            }
+
+
+        }
 
             //teleport to gold dragon
             if (Input.GetKeyDown("t"))
@@ -357,22 +345,19 @@ namespace Proj2
 
             }
 
+            **/
 
 
+            MoveForward();
+            Jump();
+           
+            ChangeOrientation();
 
-            CalculateForwardMovement();
-            CalculateVerticalMovement();
-
-            SetTargetRotation();
-
-            
-            UpdateOrientation();
-
-            PlayAudio();
+            AudioPLay();
 
             TimeoutToIdle();
 
-            m_PreviouslyGrounded = m_IsGrounded;
+            m_PreviouslyGrounded = onGround;
 
             /*
             if (teleported) {
@@ -400,11 +385,11 @@ namespace Proj2
         // Called at the start of FixedUpdate to record the current state of the base layer of the animator.
         void CacheAnimatorState()
         {
-            m_PreviousCurrentStateInfo = m_CurrentStateInfo;
+            m_PreviousCurrentStateInfo = ani_cur_state;
             m_PreviousNextStateInfo = m_NextStateInfo;
             m_PreviousIsAnimatorTransitioning = m_IsAnimatorTransitioning;
 
-            m_CurrentStateInfo = m_Animator.GetCurrentAnimatorStateInfo(0);
+            ani_cur_state = m_Animator.GetCurrentAnimatorStateInfo(0);
             m_NextStateInfo = m_Animator.GetNextAnimatorStateInfo(0);
             m_IsAnimatorTransitioning = m_Animator.IsInTransition(0);
         }
@@ -412,18 +397,18 @@ namespace Proj2
         // Called after the animator state has been cached to determine whether this script should block user input.
         void UpdateInputBlocking()
         {
-            bool inputBlocked = m_CurrentStateInfo.tagHash == m_HashBlockInput && !m_IsAnimatorTransitioning;
-            inputBlocked |= m_NextStateInfo.tagHash == m_HashBlockInput;
+            bool inputBlocked = ani_cur_state.tagHash == ani_ParamBlockInput && !m_IsAnimatorTransitioning;
+            inputBlocked |= m_NextStateInfo.tagHash == ani_ParamBlockInput;
             m_Input.playerControllerInputBlocked = inputBlocked;
         }
 
         // Called after the animator state has been cached to determine whether or not the staff should be active or not.
         bool IsWeaponEquiped()
         {
-            bool equipped = m_NextStateInfo.shortNameHash == m_HashEllenCombo1 || m_CurrentStateInfo.shortNameHash == m_HashEllenCombo1;
-            equipped |= m_NextStateInfo.shortNameHash == m_HashEllenCombo2 || m_CurrentStateInfo.shortNameHash == m_HashEllenCombo2;
-            equipped |= m_NextStateInfo.shortNameHash == m_HashEllenCombo3 || m_CurrentStateInfo.shortNameHash == m_HashEllenCombo3;
-            equipped |= m_NextStateInfo.shortNameHash == m_HashEllenCombo4 || m_CurrentStateInfo.shortNameHash == m_HashEllenCombo4;
+            bool equipped = m_NextStateInfo.shortNameHash == ani_ParamEllenCombo1 || ani_cur_state.shortNameHash == ani_ParamEllenCombo1;
+            equipped |= m_NextStateInfo.shortNameHash == ani_ParamEllenCombo2 || ani_cur_state.shortNameHash == ani_ParamEllenCombo2;
+            equipped |= m_NextStateInfo.shortNameHash == ani_ParamEllenCombo3 || ani_cur_state.shortNameHash == ani_ParamEllenCombo3;
+            equipped |= m_NextStateInfo.shortNameHash == ani_ParamEllenCombo4 || ani_cur_state.shortNameHash == ani_ParamEllenCombo4;
 
             return equipped;
         }
@@ -440,7 +425,7 @@ namespace Proj2
         }
 
         // Called each physics step.
-        void CalculateForwardMovement()
+        void MoveForward()
         {
             // Cache the move input and cap it's magnitude at 1.
             Vector2 moveInput = m_Input.MoveInput;
@@ -461,13 +446,13 @@ namespace Proj2
         }
 
         // Called each physics step.
-        void CalculateVerticalMovement()
+        void Jump()
         {
             // If jump is not currently held and Ellen is on the ground then she is ready to jump.
-            if (!m_Input.JumpInput && m_IsGrounded)
+            if (!m_Input.JumpInput && onGround)
                 m_ReadyToJump = true;
 
-            if (m_IsGrounded)
+            if (onGround)
             {
                 // When grounded we apply a slight negative vertical speed to make Ellen "stick" to the ground.
                 m_VerticalSpeed = -gravity * k_StickingGravityProportion;
@@ -477,7 +462,7 @@ namespace Proj2
                 {
                     // ... then override the previously set vertical speed and make sure she cannot jump again.
                     m_VerticalSpeed = jumpSpeed;
-                    m_IsGrounded = false;
+                    onGround = false;
                     m_ReadyToJump = false;
                 }
             }
@@ -502,16 +487,11 @@ namespace Proj2
             }
         }
 
-        // Called each physics step to set the rotation Ellen is aiming to have.
-        void SetTargetRotation()
-        {
-            
-        }
 
         
 
         // Called each physics step after SetTargetRotation if there is move input and Ellen is in the correct animator state according to IsOrientationUpdated.
-        void UpdateOrientation()
+        void ChangeOrientation()
         {
             Quaternion targetRotation;
             Vector2 moveInput = m_Input.MoveInput;
@@ -529,60 +509,32 @@ namespace Proj2
 
 
         // Called each physics step to check if audio should be played and if so instruct the relevant random audio player to do so.
-        void PlayAudio()
+        void AudioPLay()
         {
-            float footfallCurve = m_Animator.GetFloat(m_HashFootFall);
 
-            if (footfallCurve > 0.01f && !footstepPlayer.playing && footstepPlayer.canPlay)
-            {
-                footstepPlayer.playing = true;
-                footstepPlayer.canPlay = false;
-                footstepPlayer.PlayRandomClip(m_CurrentWalkingSurface, m_ForwardSpeed < 4 ? 0 : 1);
-            }
-            else if (footstepPlayer.playing)
-            {
-                footstepPlayer.playing = false;
-            }
-            else if (footfallCurve < 0.01f && !footstepPlayer.canPlay)
-            {
-                footstepPlayer.canPlay = true;
-            }
-
-            if (m_IsGrounded && !m_PreviouslyGrounded)
-            {
-                landingPlayer.PlayRandomClip(m_CurrentWalkingSurface, bankId: m_ForwardSpeed < 4 ? 0 : 1);
-                emoteLandingPlayer.PlayRandomClip();
-            }
-
-            if (!m_IsGrounded && m_PreviouslyGrounded && m_VerticalSpeed > 0f)
+            if (!onGround && m_PreviouslyGrounded && m_VerticalSpeed > 0f)
             {
                 emoteJumpPlayer.PlayRandomClip();
             }
 
-            if (m_CurrentStateInfo.shortNameHash == m_HashHurt && m_PreviousCurrentStateInfo.shortNameHash != m_HashHurt)
+            if (ani_cur_state.shortNameHash == ani_ParamHurt && m_PreviousCurrentStateInfo.shortNameHash != ani_ParamHurt)
             {
                 hurtAudioPlayer.PlayRandomClip();
             }
 
-            if (m_CurrentStateInfo.shortNameHash == m_HashEllenDeath && m_PreviousCurrentStateInfo.shortNameHash != m_HashEllenDeath)
+            if (ani_cur_state.shortNameHash == ani_ParamEllenDeath && m_PreviousCurrentStateInfo.shortNameHash != ani_ParamEllenDeath)
             {
                 emoteDeathPlayer.PlayRandomClip();
             }
 
-            if (m_CurrentStateInfo.shortNameHash == m_HashEllenCombo1 && m_PreviousCurrentStateInfo.shortNameHash != m_HashEllenCombo1 ||
-                m_CurrentStateInfo.shortNameHash == m_HashEllenCombo2 && m_PreviousCurrentStateInfo.shortNameHash != m_HashEllenCombo2 ||
-                m_CurrentStateInfo.shortNameHash == m_HashEllenCombo3 && m_PreviousCurrentStateInfo.shortNameHash != m_HashEllenCombo3 ||
-                m_CurrentStateInfo.shortNameHash == m_HashEllenCombo4 && m_PreviousCurrentStateInfo.shortNameHash != m_HashEllenCombo4)
-            {
-                emoteAttackPlayer.PlayRandomClip();
-            }
+            
         }
 
         // Called each physics step to count up to the point where Ellen considers a random idle.
         void TimeoutToIdle()
         {
             bool inputDetected = IsMoveInput || m_Input.Attack || m_Input.JumpInput || m_Input.RButton || m_Input.NukeButton || m_Input.GuidedSpell || m_Input.IceSword || m_Input.Ballista || m_Input.Cross;
-            if (m_IsGrounded && !inputDetected)
+            if (onGround && !inputDetected)
             {
                 m_IdleTimer += Time.deltaTime;
 
@@ -606,8 +558,7 @@ namespace Proj2
         {
             Vector3 movement;
 
-            // If Ellen is on the ground...
-            if (m_IsGrounded)
+            if (onGround)
             {
                 // ... raycast into the ground...
                 RaycastHit hit;
@@ -631,32 +582,26 @@ namespace Proj2
             }
             else
             {
-                // If not grounded the movement is just in the forward direction.
                 movement = m_ForwardSpeed * transform.forward * Time.deltaTime;
             }
 
-            // Rotate the transform of the character controller by the animation's root rotation.
+
             m_CharCtrl.transform.rotation *= m_Animator.deltaRotation;
 
-            // Add to the movement with the calculated vertical speed.
             movement += m_VerticalSpeed * Vector3.up * Time.deltaTime;
 
-            // Move the character controller.
             m_CharCtrl.Move(movement);
 
-            // After the movement store whether or not the character controller is grounded.
-            m_IsGrounded = m_CharCtrl.isGrounded;
+            onGround = m_CharCtrl.isGrounded;
 
-            // If Ellen is not on the ground then send the vertical speed to the animator.
-            // This is so the vertical speed is kept when landing so the correct landing animation is played.
-            if (!m_IsGrounded)
+
+            if (!onGround)
                 m_Animator.SetFloat(ParamAirVSpeed, m_VerticalSpeed);
 
-            // Send whether or not Ellen is on the ground to the animator.
-            m_Animator.SetBool(TriggerParamGround, m_IsGrounded);
+            m_Animator.SetBool(TriggerParamGround, onGround);
         }
         
-        // This is called by an animation event when Ellen swings her staff.
+
         public void MeleeAttackStart(int throwing = 0)
         {
             meleeWeapon.BeginAttack(throwing != 0);
@@ -675,13 +620,13 @@ namespace Proj2
         // This is usually called by a state machine behaviour on the animator controller but can be called from anywhere.
         public void Respawn()
         {
-            StartCoroutine(RespawnRoutine());
+            StartCoroutine(Respawning());
         }
         
-        protected IEnumerator RespawnRoutine()
+        protected IEnumerator Respawning()
         {
             // Wait for the animator to be transitioning from the EllenDeath state.
-            while (m_CurrentStateInfo.shortNameHash != m_HashEllenDeath || !m_IsAnimatorTransitioning)
+            while (ani_cur_state.shortNameHash != ani_ParamEllenDeath || !m_IsAnimatorTransitioning)
             {
                 yield return null;
             }
@@ -695,7 +640,7 @@ namespace Proj2
             m_Damageable.ResetDamage();
 
             // Set the Respawn parameter of the animator.
-            m_Animator.SetTrigger(m_HashRespawn);
+            m_Animator.SetTrigger(ani_ParamRespawn);
             
             
             
@@ -732,20 +677,9 @@ namespace Proj2
         void Damaged(Damageable.DamageMessage damageMessage)
         {
             // Set the Hurt parameter of the animator.
-            m_Animator.SetTrigger(m_HashHurt);
+            m_Animator.SetTrigger(ani_ParamHurt);
 
-            // Find the direction of the damage.
-            Vector3 forward = damageMessage.damageSource - transform.position;
-            forward.y = 0f;
-
-            Vector3 localHurt = transform.InverseTransformDirection(forward);
-
-            // Set the HurtFromX and HurtFromY parameters of the animator based on the direction of the damage.
-            m_Animator.SetFloat(m_HashHurtFromX, localHurt.x);
-            m_Animator.SetFloat(m_HashHurtFromY, localHurt.z);
-
-            // Shake the camera.
-            CameraShake.Shake(CameraShake.k_PlayerHitShakeAmount, CameraShake.k_PlayerHitShakeTime);
+           
 
             // Play an audio clip of being hurt.
             if (hurtAudioPlayer != null)
@@ -757,7 +691,7 @@ namespace Proj2
         // Called by OnReceiveMessage and by DeathVolumes in the scene.
         public void Die(Damageable.DamageMessage damageMessage)
         {
-            m_Animator.SetTrigger(m_HashDeath);
+            m_Animator.SetTrigger(ani_ParamDeath);
             m_ForwardSpeed = 0f;
             m_VerticalSpeed = 0f;
             m_Respawning = true;

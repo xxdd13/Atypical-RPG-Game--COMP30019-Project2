@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Proj2.Message;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
@@ -33,7 +32,7 @@ namespace Proj2
         protected float m_timeSinceLastHit = 0.0f;
         protected Collider m_Collider;
 
-        System.Action schedule;
+        System.Action myEvent;
 
         void Start()
         {
@@ -70,7 +69,7 @@ namespace Proj2
         public void ApplyDamage(DamageMessage data)
         {
             if (currentHitPoints <= 0)
-            {//ignore damage if already dead. TODO : may have to change that if we want to detect hit on death...
+            {
                 return;
             }
 
@@ -85,7 +84,7 @@ namespace Proj2
             currentHitPoints -= data.amount;
 
             if (currentHitPoints <= 0)
-                schedule += OnDeath.Invoke; //This avoid race condition when objects kill each other.
+                myEvent += OnDeath.Invoke; 
             else
                 OnHit.Invoke();
 
@@ -101,10 +100,10 @@ namespace Proj2
         void LateUpdate()
         {
             //print(currentHitPoints);
-            if (schedule != null)
+            if (myEvent != null)
             {
-                schedule();
-                schedule = null;
+                myEvent();
+                myEvent = null;
             }
 
             //update enemy health ui slider

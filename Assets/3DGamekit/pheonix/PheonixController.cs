@@ -71,11 +71,14 @@ public class PheonixController : MonoBehaviour {
         AnimatorStateInfo animationState = m_Animator.GetCurrentAnimatorStateInfo(0);
         if (damageable.currentHitPoints <= 0)
         {
-            if (!animationState.IsName("ice-die"))
+            if (!animationState.IsName("ph-die"))
             {
                 m_Animator.SetTrigger(m_death);
-                this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, 112.5f, this.transform.position.z);
-                return;
+                this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, 4.1f, this.transform.position.z);
+                    FlameHidden fh = iceFlame.GetComponent<FlameHidden>();
+                    fh.stopFlame();
+                    flameDone = false;
+                    return;
             }
             else
             {

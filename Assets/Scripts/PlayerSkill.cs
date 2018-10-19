@@ -39,8 +39,7 @@ namespace Proj2
 
 
 
-        /// xxxxxxxxxxxxxx
-        /// 
+
 
         // Use this for initialization
         void Start()
