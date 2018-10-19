@@ -230,6 +230,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunMovement: 0
+--- !u!114 &114545429849445500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f1a4e5631814554cadeec0ad0b0518d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114625563536636152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -253,6 +264,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52845ff9653a83742aac69939895a280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114864857517731866
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fbebf80835c69b458df5c813dfee07c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114910776015171016
@@ -2344,12 +2366,13 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Resapwning
+  m_Name: BeginResapwn
   m_Speed: 0
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101854188366603614}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114545429849445500}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 0
@@ -2460,7 +2483,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101641996791494428}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114864857517731866}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 0

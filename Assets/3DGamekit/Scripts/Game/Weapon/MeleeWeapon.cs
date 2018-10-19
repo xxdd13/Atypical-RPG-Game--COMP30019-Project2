@@ -30,8 +30,6 @@ namespace Proj2
 
         public TimeEffect[] effects;
 
-        [Header("Audio")] public RandomAudioPlayer hitAudio;
-        public RandomAudioPlayer attackAudio;
 
         public bool throwingHit
         {
@@ -71,7 +69,7 @@ namespace Proj2
 
         }
 
-        //whoever own the weapon is responsible for calling that. Allow to avoid "self harm"
+        
         public void SetOwner(GameObject owner)
         {
             m_Owner = owner;
@@ -79,8 +77,7 @@ namespace Proj2
 
         public void BeginAttack(bool thowingAttack)
         {
-            if (attackAudio != null)
-                attackAudio.PlayRandomClip();
+            
             throwingHit = thowingAttack;
 
             m_InAttack = true;
@@ -93,10 +90,6 @@ namespace Proj2
                                    attackPoints[i].attackRoot.TransformVector(attackPoints[i].offset);
                 m_PreviousPos[i] = worldPos;
 
-#if UNITY_EDITOR
-                attackPoints[i].previousPositions.Clear();
-                attackPoints[i].previousPositions.Add(m_PreviousPos[i]);
-#endif
             }
         }
 
@@ -104,13 +97,6 @@ namespace Proj2
         {
             m_InAttack = false;
 
-
-#if UNITY_EDITOR
-            for (int i = 0; i < attackPoints.Length; ++i)
-            {
-                attackPoints[i].previousPositions.Clear();
-            }
-#endif
         }
 
         private void FixedUpdate()
@@ -126,8 +112,7 @@ namespace Proj2
 
                     if (attackVector.magnitude < 0.001f)
                     {
-                        // A zero vector for the sphere cast don't yield any result, even if a collider overlap the "sphere" created by radius. 
-                        // so we set a very tiny microscopic forward cast to be sure it will catch anything overlaping that "stationary" sphere cast
+                        
                         attackVector = Vector3.forward * 0.0001f;
                     }
 
@@ -148,9 +133,6 @@ namespace Proj2
 
                     m_PreviousPos[i] = worldPos;
 
-#if UNITY_EDITOR
-                    pts.previousPositions.Add(m_PreviousPos[i]);
-#endif
                 }
             }
         }
@@ -164,24 +146,15 @@ namespace Proj2
             }
 
             if (d.gameObject == m_Owner)
-                return true; //ignore self harm, but do not end the attack (we don't "bounce" off ourselves)
+                return true; 
 
             if ((targetLayers.value & (1 << other.gameObject.layer)) == 0)
             {
-                //hit an object that is not in our layer, this end the attack. we "bounce" off it
+                
                 return false;
             }
 
-            if (hitAudio != null)
-            {
-                var renderer = other.GetComponent<Renderer>();
-                if (!renderer)
-                    renderer = other.GetComponentInChildren<Renderer> ();
-                if (renderer)
-                    hitAudio.PlayRandomClip (renderer.sharedMaterial);
-                else
-                    hitAudio.PlayRandomClip ();
-            }
+           
 
             Damageable.DamageMessage data;
 
@@ -205,28 +178,5 @@ namespace Proj2
             return true;
         }
 
-#if UNITY_EDITOR
-
-        private void OnDrawGizmosSelected()
-        {
-            for (int i = 0; i < attackPoints.Length; ++i)
-            {
-                AttackPoint pts = attackPoints[i];
-
-                if (pts.attackRoot != null)
-                {
-                    Vector3 worldPos = pts.attackRoot.TransformVector(pts.offset);
-                    Gizmos.color = new Color(1.0f, 1.0f, 1.0f, 0.4f);
-                    Gizmos.DrawSphere(pts.attackRoot.position + worldPos, pts.radius);
-                }
-
-                if (pts.previousPositions.Count > 1)
-                {
-                    UnityEditor.Handles.DrawAAPolyLine(10, pts.previousPositions.ToArray());
-                }
-            }
-        }
-
-#endif
     }
 }
