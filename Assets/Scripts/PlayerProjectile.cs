@@ -7,8 +7,6 @@ public class PlayerProjectile : MonoBehaviour
     public GameObject projectileParticle;
     public GameObject muzzleParticle;
     public GameObject[] trailParticles;
-    [HideInInspector]
- 
     private bool hasCollided = false;
 
     private float lifeTimer;
@@ -20,7 +18,7 @@ public class PlayerProjectile : MonoBehaviour
         projectileParticle.transform.parent = transform;
 		if (muzzleParticle){
         muzzleParticle = Instantiate(muzzleParticle, transform.position, transform.rotation) as GameObject;
-        Destroy(muzzleParticle, 1.5f); // Lifetime of muzzle effect.
+        Destroy(muzzleParticle, 1.5f);
 		}
     }
     void Update()
@@ -40,13 +38,7 @@ public class PlayerProjectile : MonoBehaviour
             impactParticle = Instantiate(impactParticle, transform.position, Quaternion.identity) as GameObject;
 
  
-            //yield WaitForSeconds (0.05);
-            foreach (GameObject trail in trailParticles)
-            {
-                GameObject curTrail = transform.Find(projectileParticle.name + "/" + trail.name).gameObject;
-                curTrail.transform.parent = null;
-                Destroy(curTrail, 3f);
-            }
+            
             Destroy(projectileParticle, 3f);
             Destroy(impactParticle, 5f);
             Destroy(this.gameObject);

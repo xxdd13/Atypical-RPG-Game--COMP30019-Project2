@@ -29,7 +29,10 @@ namespace Proj2
         public float idleTimeout = 5f;            
         public bool canAttack;                    
 
-        public CameraSettings cameraSettings;            
+        public CameraSettings cameraSettings;
+        public Camera cam;
+        public CameraController camController;
+
         public MeleeWeapon meleeWeapon;                        
         public RandomAudioPlayer RandAudioHurtAudioPlayer;
         public RandomAudioPlayer RandAudioLandingPlayer;
@@ -148,6 +151,8 @@ namespace Proj2
 
         void Awake()
         {
+            cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+            camController = cam.GetComponent<CameraController>();
             rb = GetComponent<Rigidbody>();
             m_Input = GetComponent<PlayerInput>();
             m_Animator = GetComponent<Animator>();
@@ -167,7 +172,6 @@ namespace Proj2
         void OnEnable()
         {        
             m_Damageable = GetComponent<Damageable>();
-            m_Damageable.onDamageMessageReceivers.Add(this);
             m_Damageable.isInvulnerable = true;
         }
 
@@ -449,7 +453,7 @@ namespace Proj2
         {
             Quaternion targetRotation;
             Vector2 moveInput = m_Input.MoveInput;
-            Vector3 forward = Quaternion.Euler(0f, cameraSettings.Current.m_XAxis.Value, 0f) * Vector3.forward;
+            Vector3 forward = Quaternion.Euler(0f, camController.x, 0f) * Vector3.forward;
             Vector3 localMovementDirection = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
 
             

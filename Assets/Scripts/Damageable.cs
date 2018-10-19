@@ -40,6 +40,12 @@ namespace Proj2
             m_Collider = GetComponent<Collider>();
         }
 
+        void OnEnable()
+        {
+            if (healthSlider != null)
+                healthSlider.maxValue = this.maxHitPoints;
+        }
+
         void Update()
         {
             if (isInvulnerable)

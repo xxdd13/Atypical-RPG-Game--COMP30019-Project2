@@ -80,7 +80,8 @@ namespace Proj2
                     return;
                 }
                 else {
-                    gate.GetComponent<GateController>().enabled = true ;
+                    if (gate!=null)
+                        gate.GetComponent<GateController>().enabled = true ;
                     
                     return;
                 }
@@ -95,8 +96,6 @@ namespace Proj2
                 {
 
                     int att = Random.Range(0, 4);
-
-                    print(att);
 
 
                     if (att == 0)

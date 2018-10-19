@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+namespace Proj2 { 
 public class CameraController : MonoBehaviour {
     
     public Transform lookAt; // Look at
@@ -24,8 +24,8 @@ public class CameraController : MonoBehaviour {
     // Current Parameters
     private Quaternion rotation;
     private Vector3 position;
-    private float x = 0.0f;
-    private float y = 0.0f;
+    public float x = 0.0f;
+    public float y = 0.0f;
 
     // Detect Camera Collisions (Radius of thin/thick SphereCast)
     private float thinRadius = 0.15f;
@@ -171,3 +171,7 @@ public class CameraController : MonoBehaviour {
     }
 
 }
+
+}
+
+
