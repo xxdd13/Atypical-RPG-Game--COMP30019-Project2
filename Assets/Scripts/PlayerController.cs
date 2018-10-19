@@ -40,15 +40,15 @@ namespace Proj2
         protected AnimatorStateInfo ani_cur_state;   
         protected AnimatorStateInfo m_NextStateInfo;
         protected bool m_IsAnimatorTransitioning;
-        protected AnimatorStateInfo m_PreviousCurrentStateInfo;    
-        protected AnimatorStateInfo m_PreviousNextStateInfo;
-        protected bool m_PreviousIsAnimatorTransitioning;
+        protected AnimatorStateInfo lastState;    
+        protected AnimatorStateInfo nextState;
+        protected bool lastTrans;
         protected bool onGround = true;            
         protected bool m_PreviouslyGrounded = true;   
-        protected bool m_ReadyToJump;                  
+        protected bool jumpReady;                  
         protected float absForwardSpeedMag;         
         protected float m_ForwardSpeed;               
-        protected float m_VerticalSpeed;              
+        protected float vSpeed;              
         protected PlayerInput m_Input;                 
         protected CharacterController m_CharCtrl;    
         public Animator m_Animator;                
@@ -181,7 +181,7 @@ namespace Proj2
 
             UpdateInputBlocking();
 
-            EquipMeleeWeapon(IsWeaponEquiped());
+            
 
             m_Animator.SetFloat(ani_ParamStateTime, Mathf.Repeat(m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1f));
             m_Animator.ResetTrigger(TriggerParamMelee);
@@ -339,9 +339,10 @@ namespace Proj2
            
             ChangeOrientation();
 
+            MeleeAdd();
             AudioPLay();
 
-            TimeoutToIdle();
+            inputIdle();
 
             m_PreviouslyGrounded = onGround;
 
@@ -371,9 +372,9 @@ namespace Proj2
         // Called at the start of FixedUpdate to record the current state of the base layer of the animator.
         void RecordAniState()
         {
-            m_PreviousCurrentStateInfo = ani_cur_state;
-            m_PreviousNextStateInfo = m_NextStateInfo;
-            m_PreviousIsAnimatorTransitioning = m_IsAnimatorTransitioning;
+            lastState = ani_cur_state;
+            nextState = m_NextStateInfo;
+            lastTrans = m_IsAnimatorTransitioning;
 
             ani_cur_state = m_Animator.GetCurrentAnimatorStateInfo(0);
             m_NextStateInfo = m_Animator.GetNextAnimatorStateInfo(0);
@@ -387,28 +388,7 @@ namespace Proj2
             inputBlocked |= m_NextStateInfo.tagHash == ani_ParamBlockInput;
             m_Input.playerControllerInputBlocked = inputBlocked;
         }
-
-        // Called after the animator state has been cached to determine whether or not the staff should be active or not.
-        bool IsWeaponEquiped()
-        {
-            bool equipped = m_NextStateInfo.shortNameHash == ani_ParamMelee1 || ani_cur_state.shortNameHash == ani_ParamMelee1;
-            equipped |= m_NextStateInfo.shortNameHash == ani_ParamMelee2 || ani_cur_state.shortNameHash == ani_ParamMelee2;
-            equipped |= m_NextStateInfo.shortNameHash == ani_ParamMelee3 || ani_cur_state.shortNameHash == ani_ParamMelee3;
-            equipped |= m_NextStateInfo.shortNameHash == ani_ParamMelee4 || ani_cur_state.shortNameHash == ani_ParamMelee4;
-
-            return equipped;
-        }
-
-        // Called each physics step with a parameter based on the return value of IsWeaponEquiped.
-        void EquipMeleeWeapon(bool equip)
-        {
-            meleeWeapon.gameObject.SetActive(equip);
-            m_InAttack = false;
-            m_InCombo = equip;
-
-            if (!equip)
-                m_Animator.ResetTrigger(TriggerParamMelee);
-        }
+        
 
         void MoveForward()
         {
@@ -426,39 +406,39 @@ namespace Proj2
 
         void Jump()
         {
-            // If jump is not currently held and Ellen is on the ground then she is ready to jump.
+            
             if (!m_Input.JumpInput && onGround)
-                m_ReadyToJump = true;
+                jumpReady = true;
 
             if (onGround)
             {
 
-                m_VerticalSpeed = -gravity * k_StickingGravityProportion;
+                vSpeed = -gravity * k_StickingGravityProportion;
             }
             else
             {
-                // If Ellen is airborne, the jump button is not held and Ellen is currently moving upwards...
-                if (!m_Input.JumpInput && m_VerticalSpeed > 0.0f)
+                
+                if (!m_Input.JumpInput && vSpeed > 0.0f)
                 {
 
-                    m_VerticalSpeed -= k_JumpAbortSpeed * Time.deltaTime;
+                    vSpeed -= k_JumpAbortSpeed * Time.deltaTime;
                 }
 
-                if (Mathf.Approximately(0f, m_VerticalSpeed))
+                if (Mathf.Approximately(0f, vSpeed))
                 {
-                    m_VerticalSpeed = 0f;
+                    vSpeed = 0f;
                 }
 
-                // If Ellen is airborne, apply gravity.
-                m_VerticalSpeed -= gravity * Time.deltaTime;
+                // downward force
+                vSpeed += gravity * Time.deltaTime*-1;
             }
 
-            if (onGround && m_Input.JumpInput && m_ReadyToJump && !m_InCombo)
+            if (onGround && m_Input.JumpInput && jumpReady && !m_InCombo)
             {
 
-                    m_VerticalSpeed = jumpSpeed;
+                    vSpeed = jumpSpeed;
                     onGround = false;
-                    m_ReadyToJump = false;
+                    jumpReady = false;
             }
             
             
@@ -481,21 +461,44 @@ namespace Proj2
             transform.rotation = targetRotation;
         }
 
+        void MeleeAdd() {
+            if (ani_cur_state.shortNameHash == ani_ParamMelee1 && lastState.shortNameHash != ani_ParamMelee1)
+            {
+                RandAudioAttackPlayer.PlayRandomClip();
+                m_skill.rb2();
+            }
+
+            if (ani_cur_state.shortNameHash == ani_ParamMelee2 && lastState.shortNameHash != ani_ParamMelee2)
+            {
+                RandAudioAttackPlayer.PlayRandomClip();
+                m_skill.rb2();
+            }
+            if (ani_cur_state.shortNameHash == ani_ParamMelee3 && lastState.shortNameHash != ani_ParamMelee3)
+            {
+                RandAudioAttackPlayer.PlayRandomClip();
+                m_skill.rb2();
+            }
+            if (ani_cur_state.shortNameHash == ani_ParamMelee4 && lastState.shortNameHash != ani_ParamMelee4)
+            {
+                RandAudioAttackPlayer.PlayRandomClip();
+                m_skill.rb2();
+            }
+        }
 
         void AudioPLay()
         {
 
-            if (!onGround && m_PreviouslyGrounded && m_VerticalSpeed > 0f)
+            if (!onGround && m_PreviouslyGrounded && vSpeed > 0f)
             {
                 RandAudioJumpPlayer.PlayRandomClip();
             }
 
-            if (ani_cur_state.shortNameHash == ani_ParamHurt && m_PreviousCurrentStateInfo.shortNameHash != ani_ParamHurt)
+            if (ani_cur_state.shortNameHash == ani_ParamHurt && lastState.shortNameHash != ani_ParamHurt)
             {
                 RandAudioHurtAudioPlayer.PlayRandomClip();
             }
 
-            if (ani_cur_state.shortNameHash == ani_ParamPlayerDeath && m_PreviousCurrentStateInfo.shortNameHash != ani_ParamPlayerDeath)
+            if (ani_cur_state.shortNameHash == ani_ParamPlayerDeath && lastState.shortNameHash != ani_ParamPlayerDeath)
             {
                 RandAudioDeathPlayer.PlayRandomClip();
             }
@@ -503,7 +506,7 @@ namespace Proj2
             
         }
 
-        void TimeoutToIdle()
+        void inputIdle()
         {
             bool inputDetected = IsMoveInput || m_Input.Attack || m_Input.JumpInput || m_Input.RButton || m_Input.NukeButton || m_Input.GuidedSpell || m_Input.IceSword || m_Input.Ballista || m_Input.Cross;
             if (onGround && !inputDetected)
@@ -557,7 +560,7 @@ namespace Proj2
 
             m_CharCtrl.transform.rotation *= m_Animator.deltaRotation;
 
-            movement += m_VerticalSpeed * Vector3.up * Time.deltaTime;
+            movement += vSpeed * Vector3.up * Time.deltaTime;
 
             m_CharCtrl.Move(movement);
 
@@ -565,7 +568,7 @@ namespace Proj2
 
 
             if (!onGround)
-                m_Animator.SetFloat(ParamAirVSpeed, m_VerticalSpeed);
+                m_Animator.SetFloat(ParamAirVSpeed, vSpeed);
 
             m_Animator.SetBool(TriggerParamGround, onGround);
         }
@@ -660,7 +663,7 @@ namespace Proj2
         {
             m_Animator.SetTrigger(ani_ParamDeath);
             m_ForwardSpeed = 0f;
-            m_VerticalSpeed = 0f;
+            vSpeed = 0f;
             m_Respawning = true;
             m_Damageable.isInvulnerable = true;
         }

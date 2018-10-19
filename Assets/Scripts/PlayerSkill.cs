@@ -7,6 +7,8 @@ namespace Proj2
     {
         private FindTarget ft;
         public GameObject rbSkill;
+
+        public GameObject rbSkill2;
         public GameObject nukeSkill;
         public GameObject guidedSkill;
         public GameObject smallIceSwordSkill;
@@ -126,6 +128,28 @@ namespace Proj2
 
             projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * speed);
             //projectile.GetComponent<PlayerProjectile>().impactNormal = position.normal;
+
+
+        }
+        public void rb2()
+        {
+            //ignore player and magic spell collision
+
+            Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
+            position = Camera.main.ScreenToWorldPoint(position);
+
+
+
+            Vector3 forwardPos = spawnPosition.position + spawnPosition.forward;
+            Vector3 newPos = new Vector3(forwardPos.x, forwardPos.y, forwardPos.z);
+
+            GameObject projectile = Instantiate(rbSkill2, newPos, Quaternion.identity) as GameObject;
+            projectile.transform.LookAt(position);
+            
+
+
+
+            projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * speed);
 
 
         }

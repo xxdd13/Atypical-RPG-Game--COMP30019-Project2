@@ -8,7 +8,6 @@ public class PlayerProjectile : MonoBehaviour
     public GameObject muzzleParticle;
     public GameObject[] trailParticles;
     [HideInInspector]
-    public Vector3 impactNormal; //Used to rotate impactparticle.
  
     private bool hasCollided = false;
 
@@ -37,15 +36,9 @@ public class PlayerProjectile : MonoBehaviour
         if (!hasCollided)
         {
             hasCollided = true;
-            //transform.DetachChildren();
-            impactParticle = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, impactNormal)) as GameObject;
-            //Debug.DrawRay(hit.contacts[0].point, hit.contacts[0].normal * 1, Color.yellow);
- 
-            if (hit.gameObject.tag == "Destructible") // Projectile will destroy objects tagged as Destructible
-            {
-                Destroy(hit.gameObject);
-            }
- 
+
+            impactParticle = Instantiate(impactParticle, transform.position, Quaternion.identity) as GameObject;
+
  
             //yield WaitForSeconds (0.05);
             foreach (GameObject trail in trailParticles)
@@ -57,19 +50,8 @@ public class PlayerProjectile : MonoBehaviour
             Destroy(projectileParticle, 3f);
             Destroy(impactParticle, 5f);
             Destroy(this.gameObject);
-            //projectileParticle.Stop();
 			
-			ParticleSystem[] trails = GetComponentsInChildren<ParticleSystem>();
-            //Component at [0] is that of the parent i.e. this object (if there is any)
-            for (int i = 1; i < trails.Length; i++)
-            {
-                ParticleSystem trail = trails[i];
-                if (!trail.gameObject.name.Contains("Trail"))
-                    continue;
-
-                trail.transform.SetParent(null);
-                Destroy(trail.gameObject, 2);
-            }
+            
         }
     }
 }
