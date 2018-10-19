@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Cliff_B_Mat
-  m_Shader: {fileID: 4800000, guid: 2ae82401fc34f431bad9b774c2942292, type: 3}
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION _NORMALMAP _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 1
@@ -75,7 +75,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 5a23ffdedd848034f96d37a8e2c6db1a, type: 3}
+        m_Texture: {fileID: 2800000, guid: c469316b0e200614daa4511fd0e1d512, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -181,7 +181,7 @@ Material:
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _Color: {r: 0.4528302, g: 0.13420668, b: 0.014951949, a: 0}
+    - _Color: {r: 0.5943396, g: 0.58820224, b: 0.58592916, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GlobalColor: {r: 0.5882353, g: 0.5294118, b: 0.40784317, a: 1}
     - _GrassColor: {r: 0.5909737, g: 1, b: 0.1985294, a: 1}
