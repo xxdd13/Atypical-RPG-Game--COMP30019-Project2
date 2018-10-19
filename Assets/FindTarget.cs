@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+namespace Proj2 { 
 public class FindTarget : MonoBehaviour {
 
     public GameObject target = null;
@@ -51,4 +51,5 @@ public class FindTarget : MonoBehaviour {
         
         return bestTarget;
     }
+}
 }

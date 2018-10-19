@@ -55,7 +55,7 @@ namespace Proj2
                 }
             }
 
-            if (!ttp.turning && !ttp.movingFront && ttp.targetDistance<10f && !doing)
+            if (!ttp.turning && !ttp.movingFront && ttp.targetDistance < 10f && !doing)
             {
 
                 ttp.attacking = true;
@@ -69,6 +69,10 @@ namespace Proj2
                 }
 
 
+
+            }
+            else {
+                return;
 
             }
 

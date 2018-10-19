@@ -1,19 +1,14 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
-using Gamekit3D;
+
 
 
 public class PlayerInput : MonoBehaviour
 {
-    public static PlayerInput Instance
-    {
-        get { return s_Instance; }
-    }
+    
 
-    protected static PlayerInput s_Instance;
+    
 
-    [HideInInspector]
     public bool playerControllerInputBlocked;
 
     protected Vector2 m_Movement;
@@ -28,6 +23,11 @@ public class PlayerInput : MonoBehaviour
     public bool IceSword;
     public bool Ballista;
     public bool Cross;
+    protected static PlayerInput pInput;
+    public static PlayerInput Instance
+    {
+        get { return pInput; }
+    }
 
 
     public Vector2 MoveInput
@@ -99,10 +99,10 @@ public class PlayerInput : MonoBehaviour
         m_BallistaInputWait = new WaitForSeconds(k_BallistaInputDuration);
         m_CrossInputWait = new WaitForSeconds(k_CrossInputDuration);
 
-        if (s_Instance == null)
-            s_Instance = this;
-        else if (s_Instance != this)
-            throw new UnityException("There cannot be more than one PlayerInput script.  The instances are " + s_Instance.name + " and " + name + ".");
+        if (pInput == null)
+            pInput = this;
+        else if (pInput != this)
+            throw new UnityException("There cannot be more than one PlayerInput script.  The instances are " + pInput.name + " and " + name + ".");
     }
 
 

@@ -48,7 +48,7 @@ namespace Proj2
         protected bool onGround = true;            
         protected bool m_PreviouslyGrounded = true;   
         protected bool m_ReadyToJump;                  
-        protected float m_DesiredForwardSpeed;         
+        protected float absForwardSpeedMag;         
         protected float m_ForwardSpeed;               
         protected float m_VerticalSpeed;              
         protected PlayerInput m_Input;                 
@@ -65,52 +65,52 @@ namespace Proj2
         protected float m_IdleTimer;                  
 
 
-        const float k_AirborneTurnSpeedProportion = 5.4f;
-        const float k_GroundedRayDistance = 1f;
-        const float k_JumpAbortSpeed = 10f;
-        const float k_MinEnemyDotCoeff = 0.2f;
-        const float k_InverseOneEighty = 1f / 180f;
-        const float k_StickingGravityProportion = 0.3f;
-        const float k_GroundAcceleration = 20f;
-        const float k_GroundDeceleration = 25f;
+        float k_AirborneTurnSpeedProportion = 5.4f;
+        float k_GroundedRayDistance = 1f;
+        float k_JumpAbortSpeed = 10f;
+        float k_MinEnemyDotCoeff = 0.2f;
+        float k_InverseOneEighty = 1f / 180f;
+        float k_StickingGravityProportion = 0.3f;
+        float k_GroundAcceleration = 20f;
+        float k_GroundDeceleration = 25f;
 
 
         // animator param 
 
-        protected int ParamAirVSpeed = Animator.StringToHash("AirborneVerticalSpeed");
-        protected int ParamForwardSpeed = Animator.StringToHash("ForwardSpeed");
-        protected int ParamAngleRand = Animator.StringToHash("AngleDeltaRad");
-        protected int TriggerParamIdle = Animator.StringToHash("TimeoutToIdle");
-        protected int TriggerParamGround = Animator.StringToHash("Grounded");
-        protected int TriggerParamInput = Animator.StringToHash("InputDetected");
-        protected int TriggerParamMelee = Animator.StringToHash("MeleeAttack");
-        protected int TriggerParamRB = Animator.StringToHash("RButtonAttack");
-        protected int TriggerParamNuke = Animator.StringToHash("Nuke");
-        protected int TriggerParamGunAuto = Animator.StringToHash("GunAuto");
-        protected int TriggerParamIceSword = Animator.StringToHash("IceSword");
-        protected int TriggerParamBallista = Animator.StringToHash("Ballista");
-        protected int TriggerParamCross = Animator.StringToHash("cross");
+        int ParamAirVSpeed = Animator.StringToHash("AirborneVerticalSpeed");
+        int ParamForwardSpeed = Animator.StringToHash("ForwardSpeed");
+        int ParamAngleRand = Animator.StringToHash("AngleDeltaRad");
+        int TriggerParamIdle = Animator.StringToHash("TimeoutToIdle");
+        int TriggerParamGround = Animator.StringToHash("Grounded");
+        int TriggerParamInput = Animator.StringToHash("InputDetected");
+        int TriggerParamMelee = Animator.StringToHash("MeleeAttack");
+        int TriggerParamRB = Animator.StringToHash("RButtonAttack");
+        int TriggerParamNuke = Animator.StringToHash("Nuke");
+        int TriggerParamGunAuto = Animator.StringToHash("GunAuto");
+        int TriggerParamIceSword = Animator.StringToHash("IceSword");
+        int TriggerParamBallista = Animator.StringToHash("Ballista");
+        int TriggerParamCross = Animator.StringToHash("cross");
 
 
-        readonly int ani_ParamHurt = Animator.StringToHash("Hurt");
-        readonly int ani_ParamDeath = Animator.StringToHash("Death");
-        readonly int ani_ParamRespawn = Animator.StringToHash("Respawn");
-        readonly int ani_ParamHurtFromX = Animator.StringToHash("HurtFromX");
-        readonly int ani_ParamHurtFromY = Animator.StringToHash("HurtFromY");
-        readonly int ani_ParamStateTime = Animator.StringToHash("StateTime");
-        readonly int ani_ParamFootFall = Animator.StringToHash("FootFall");
+        int ani_ParamHurt = Animator.StringToHash("Hurt");
+        int ani_ParamDeath = Animator.StringToHash("Death");
+        int ani_ParamRespawn = Animator.StringToHash("Respawn");
+        int ani_ParamHurtFromX = Animator.StringToHash("HurtFromX");
+        int ani_ParamHurtFromY = Animator.StringToHash("HurtFromY");
+        int ani_ParamStateTime = Animator.StringToHash("StateTime");
+        int ani_ParamFootFall = Animator.StringToHash("FootFall");
 
         // States
-        readonly int ani_ParamLocomotion = Animator.StringToHash("Locomotion");
-        readonly int ani_ParamAirborne = Animator.StringToHash("Airborne");
-        readonly int ani_ParamLanding = Animator.StringToHash("Landing");    // Also a parameter.
-        readonly int ani_ParamEllenCombo1 = Animator.StringToHash("EllenCombo1");
-        readonly int ani_ParamEllenCombo2 = Animator.StringToHash("EllenCombo2");
-        readonly int ani_ParamEllenCombo3 = Animator.StringToHash("EllenCombo3");
-        readonly int ani_ParamEllenCombo4 = Animator.StringToHash("EllenCombo4");
-        readonly int ani_ParamEllenDeath = Animator.StringToHash("EllenDeath");
+        int ani_ParamLocomotion = Animator.StringToHash("Locomotion");
+        int ani_ParamAirborne = Animator.StringToHash("Airborne");
+        int ani_ParamLanding = Animator.StringToHash("Landing");    // Also a parameter.
+        int ani_ParamEllenCombo1 = Animator.StringToHash("EllenCombo1");
+        int ani_ParamEllenCombo2 = Animator.StringToHash("EllenCombo2");
+        int ani_ParamEllenCombo3 = Animator.StringToHash("EllenCombo3");
+        int ani_ParamEllenCombo4 = Animator.StringToHash("EllenCombo4");
+        int ani_ParamEllenDeath = Animator.StringToHash("Die");
 
-        // Tags
+        
         readonly int ani_ParamBlockInput = Animator.StringToHash("BlockInput");
 
 
@@ -129,7 +129,6 @@ namespace Proj2
             this.canAttack = canAttack;
         }
 
-        // Called automatically by Unity when the script is first added to a gameobject or is reset from the context menu.
         void Reset()
         {
             meleeWeapon = GetComponentInChildren<MeleeWeapon>();
@@ -158,16 +157,14 @@ namespace Proj2
             }
         }
 
-        // Called automatically by Unity when the script first exists in the scene.
         void Awake()
         {
+            rb = GetComponent<Rigidbody>();
             m_Input = GetComponent<PlayerInput>();
             m_Animator = GetComponent<Animator>();
             m_CharCtrl = GetComponent<CharacterController>();
-            rb = GetComponent<Rigidbody>();
             cd = GetComponent<PlayerCoolDown>();
             m_skill = GetComponent<PlayerSkill>();
-
             meleeWeapon.SetOwner(gameObject);
 
             pc = this;
@@ -191,7 +188,7 @@ namespace Proj2
 
         void FixedUpdate()
         {
-            CacheAnimatorState();
+            RecordAniState();
 
             UpdateInputBlocking();
 
@@ -383,7 +380,7 @@ namespace Proj2
         }
 
         // Called at the start of FixedUpdate to record the current state of the base layer of the animator.
-        void CacheAnimatorState()
+        void RecordAniState()
         {
             m_PreviousCurrentStateInfo = ani_cur_state;
             m_PreviousNextStateInfo = m_NextStateInfo;
@@ -424,28 +421,20 @@ namespace Proj2
                 m_Animator.ResetTrigger(TriggerParamMelee);
         }
 
-        // Called each physics step.
         void MoveForward()
         {
-            // Cache the move input and cap it's magnitude at 1.
             Vector2 moveInput = m_Input.MoveInput;
             if (moveInput.sqrMagnitude > 1f)
                 moveInput.Normalize();
 
-            // Calculate the speed intended by input.
-            m_DesiredForwardSpeed = moveInput.magnitude * maxForwardSpeed;
+            absForwardSpeedMag = moveInput.magnitude * maxForwardSpeed;
 
-            // Determine change to speed based on whether there is currently any move input.
-            float acceleration = IsMoveInput ? k_GroundAcceleration : k_GroundDeceleration*3f;
+            float a = IsMoveInput ? k_GroundAcceleration : k_GroundDeceleration*3f;
 
-            // Adjust the forward speed towards the desired speed.
-            m_ForwardSpeed = Mathf.MoveTowards(m_ForwardSpeed, m_DesiredForwardSpeed, acceleration * Time.deltaTime);
-
-            // Set the animator parameter to control what animation is being played.
+            m_ForwardSpeed = Mathf.MoveTowards(m_ForwardSpeed, absForwardSpeedMag, a * Time.deltaTime);
             m_Animator.SetFloat(ParamForwardSpeed, m_ForwardSpeed);
         }
 
-        // Called each physics step.
         void Jump()
         {
             // If jump is not currently held and Ellen is on the ground then she is ready to jump.
@@ -454,43 +443,39 @@ namespace Proj2
 
             if (onGround)
             {
-                // When grounded we apply a slight negative vertical speed to make Ellen "stick" to the ground.
-                m_VerticalSpeed = -gravity * k_StickingGravityProportion;
 
-                // If jump is held, Ellen is ready to jump and not currently in the middle of a melee combo...
-                if (m_Input.JumpInput && m_ReadyToJump && !m_InCombo)
-                {
-                    // ... then override the previously set vertical speed and make sure she cannot jump again.
-                    m_VerticalSpeed = jumpSpeed;
-                    onGround = false;
-                    m_ReadyToJump = false;
-                }
+                m_VerticalSpeed = -gravity * k_StickingGravityProportion;
             }
             else
             {
                 // If Ellen is airborne, the jump button is not held and Ellen is currently moving upwards...
                 if (!m_Input.JumpInput && m_VerticalSpeed > 0.0f)
                 {
-                    // ... decrease Ellen's vertical speed.
-                    // This is what causes holding jump to jump higher that tapping jump.
+
                     m_VerticalSpeed -= k_JumpAbortSpeed * Time.deltaTime;
                 }
 
-                // If a jump is approximately peaking, make it absolute.
-                if (Mathf.Approximately(m_VerticalSpeed, 0f))
+                if (Mathf.Approximately(0f, m_VerticalSpeed))
                 {
                     m_VerticalSpeed = 0f;
                 }
-                
+
                 // If Ellen is airborne, apply gravity.
                 m_VerticalSpeed -= gravity * Time.deltaTime;
             }
+
+            if (onGround && m_Input.JumpInput && m_ReadyToJump && !m_InCombo)
+            {
+
+                    m_VerticalSpeed = jumpSpeed;
+                    onGround = false;
+                    m_ReadyToJump = false;
+            }
+            
+            
         }
 
 
-        
-
-        // Called each physics step after SetTargetRotation if there is move input and Ellen is in the correct animator state according to IsOrientationUpdated.
         void ChangeOrientation()
         {
             Quaternion targetRotation;
@@ -508,7 +493,6 @@ namespace Proj2
         }
 
 
-        // Called each physics step to check if audio should be played and if so instruct the relevant random audio player to do so.
         void AudioPLay()
         {
 
@@ -616,17 +600,16 @@ namespace Proj2
         }
 
        
-
-        // This is usually called by a state machine behaviour on the animator controller but can be called from anywhere.
         public void Respawn()
         {
             StartCoroutine(Respawning());
         }
         
-        protected IEnumerator Respawning()
+        protected IEnumerator Respawning()            
         {
+            
             // Wait for the animator to be transitioning from the EllenDeath state.
-            while (ani_cur_state.shortNameHash != ani_ParamEllenDeath || !m_IsAnimatorTransitioning)
+            while (ani_cur_state.shortNameHash != ani_ParamEllenDeath)
             {
                 yield return null;
             }
@@ -646,7 +629,6 @@ namespace Proj2
             
         }
 
-        // Called by a state machine behaviour on Ellen's animator controller.
         public void RespawnFinished()
         {
             m_Respawning = false;

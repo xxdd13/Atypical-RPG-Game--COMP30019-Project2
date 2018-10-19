@@ -5,7 +5,7 @@ namespace Proj2
 {
     public class PlayerSkill : MonoBehaviour
     {
-        /// xxxxxxxxxxxxxxx
+        private FindTarget ft;
         public GameObject rbSkill;
         public GameObject nukeSkill;
         public GameObject guidedSkill;
@@ -46,6 +46,7 @@ namespace Proj2
         {
             Physics.IgnoreLayerCollision(10, 11);
             Physics.IgnoreLayerCollision(11, 11);
+            ft = this.gameObject.GetComponent<FindTarget>();
         }
 
         private void Awake()
@@ -112,19 +113,35 @@ namespace Proj2
             Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
             position = Camera.main.ScreenToWorldPoint(position);
 
-            ;
+            
 
             Vector3 forwardPos = spawnPosition.position + spawnPosition.forward;
             Vector3 newPos = new Vector3(forwardPos.x, forwardPos.y, forwardPos.z);
 
             GameObject projectile = Instantiate(rbSkill, newPos, Quaternion.identity) as GameObject;
             projectile.transform.LookAt(position);
+            rbwait(1f);
 
 
 
             projectile.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * speed);
             //projectile.GetComponent<PlayerProjectile>().impactNormal = position.normal;
 
+
+        }
+
+        IEnumerator rbwait(float waitTime)
+        {
+            print(1111111);
+            yield return new WaitForSeconds(waitTime);
+            Vector3 forwardPos = spawnPosition.position + spawnPosition.forward;
+            Vector3 newPos = new Vector3(forwardPos.x, forwardPos.y, forwardPos.z);
+            GameObject projectile = Instantiate(rbSkill, newPos, Quaternion.identity) as GameObject;
+            Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
+            position = Camera.main.ScreenToWorldPoint(position);
+            projectile.transform.LookAt(position);
+
+            rbwait(1f);
 
         }
 
@@ -147,7 +164,9 @@ namespace Proj2
         public void guided()
         {
 
-
+            if (ft.target == null) {
+                return;
+            }
             float rnd1 = Random.Range(-5.0f, 5.0f);
             float rnd2 = Random.Range(-5.0f, 5.0f);
             Vector3 position = new Vector3(this.transform.position.x + rnd1, this.transform.position.y + 10f, this.transform.position.z + rnd2);
@@ -156,7 +175,7 @@ namespace Proj2
             projectile.transform.LookAt(position);
 
             GuidedArrow missile = projectile.GetComponent<GuidedArrow>();
-            missile.target = goldDragon.transform;
+            missile.target = ft.target.transform;
 
         }
 
