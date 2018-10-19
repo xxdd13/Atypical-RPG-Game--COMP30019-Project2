@@ -36,11 +36,6 @@ public class PlayerProjectile : MonoBehaviour
             hasCollided = true;
 
             impactParticle = Instantiate(impactParticle, transform.position, Quaternion.identity) as GameObject;
-
- 
-            
-            Destroy(projectileParticle, 3f);
-            Destroy(impactParticle, 5f);
             Destroy(this.gameObject);
 			
             

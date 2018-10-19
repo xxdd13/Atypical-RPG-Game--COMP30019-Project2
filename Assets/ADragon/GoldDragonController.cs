@@ -71,10 +71,7 @@ namespace Proj2
 
 
             }
-            else {
-                return;
-
-            }
+            
 
             if (!circleDone && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("ad-cast"))
             {

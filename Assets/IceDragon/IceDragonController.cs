@@ -304,7 +304,6 @@ namespace Proj2
 
 
                 float stateTime = clip[0].clip.length * animationState.normalizedTime;
-                print(stateTime);
                 if (stateTime > 2f && stateTime < 6.1f)
                 {
                     biteHurtBox.SetActive(true);

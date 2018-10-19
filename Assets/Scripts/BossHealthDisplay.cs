@@ -35,6 +35,8 @@ namespace Proj2
                     this.bossUI.SetActive(true);
                     damageable.healthSlider = this.healthSlider;
                     damageable.healthSlider.enabled = true;
+                    damageable.healthSlider.maxValue = damageable.maxHitPoints;
+
                     canvasBossText.text = this.bossName;
                 }
                 else
